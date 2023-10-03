@@ -39,6 +39,14 @@ public class Afiliados {
 
     public Afiliados() {
     }
+
+    public int getIdAfiliado() {
+        return idAfiliado;
+    }
+
+    public void setIdAfiliado(int idAfiliado) {
+        this.idAfiliado = idAfiliado;
+    }
     
     
     public String getNombre() {
