@@ -5,6 +5,8 @@
  */
 package massalud;
 
+import Vistas.VistaMenuPrincipal;
+
 /**
  *
  * @author sergi
@@ -16,6 +18,7 @@ public class MasSalud {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        VistaMenuPrincipal.main(args);
     }
     
 }
