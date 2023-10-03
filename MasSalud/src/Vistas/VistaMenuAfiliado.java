@@ -5,17 +5,30 @@
  */
 package Vistas;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import massalud.AccesoADatos.afiliadoData;
+import massalud.Entidades.Afiliados;
+
 /**
  *
  * @author sergi
  */
 public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
-
+    private DefaultTableModel modelo;
+    private List<Afiliados>listaAfili;
+    private afiliadoData afiData;
     /**
      * Creates new form VistaMenuAfiliado
      */
     public VistaMenuAfiliado() {
         initComponents();
+        modelo = new DefaultTableModel();
+        afiData = new afiliadoData();
+     
+        armarCabeceraTabla();
+        cargardatoDeAfiliados();
     }
 
     /**
@@ -32,12 +45,34 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
         jDocumentoAfiliado = new javax.swing.JTextField();
         jBuscarAfiliado = new javax.swing.JButton();
         jSalida = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jafiliado = new javax.swing.JTable();
+        jModificar = new javax.swing.JButton();
+        jEliminar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jDni = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jNombre = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jApellido = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jTelefono = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jDomicilio = new javax.swing.JTextField();
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 0, 24)); // NOI18N
         jLabel1.setText("AFILIADOS");
 
-        jLabel2.setText("Documento");
+        jLabel2.setText("Documento:");
 
-        jDocumentoAfiliado.setText("jTextField1");
+        jDocumentoAfiliado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDocumentoAfiliadoActionPerformed(evt);
+            }
+        });
 
         jBuscarAfiliado.setText("Buscar");
 
@@ -48,29 +83,96 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
             }
         });
 
+        jafiliado.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jafiliado);
+
+        jModificar.setText("Modificar");
+
+        jEliminar.setText("Eliminar");
+        jEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEliminarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Agregar");
+
+        jLabel3.setText("Datos personales");
+
+        jLabel4.setText("Dni:");
+
+        jLabel5.setText("Nombre:");
+
+        jLabel6.setText("Apellido:");
+
+        jLabel7.setText("Domicilio y telefono:");
+
+        jLabel8.setText("Telefono:");
+
+        jLabel9.setText("Domicilio:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(222, 222, 222))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 44, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton1)
+                        .addGap(29, 29, 29)
+                        .addComponent(jEliminar)
+                        .addGap(27, 27, 27)
+                        .addComponent(jModificar)
+                        .addGap(30, 30, 30)
+                        .addComponent(jSalida)
+                        .addGap(33, 33, 33))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(156, 156, 156)
-                                .addComponent(jLabel1))
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDni)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
                                 .addComponent(jLabel2)
-                                .addGap(39, 39, 39)
-                                .addComponent(jDocumentoAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(jBuscarAfiliado)))
-                        .addGap(0, 36, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jSalida)))
-                .addContainerGap())
+                                .addGap(18, 18, 18)
+                                .addComponent(jDocumentoAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBuscarAfiliado))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel7)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,9 +184,33 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(jDocumentoAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBuscarAfiliado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-                .addComponent(jSalida)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSalida)
+                    .addComponent(jModificar)
+                    .addComponent(jEliminar)
+                    .addComponent(jButton1))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -95,12 +221,76 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jSalidaActionPerformed
 
+    private void jDocumentoAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDocumentoAfiliadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDocumentoAfiliadoActionPerformed
+
+    private void jEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField jApellido;
     private javax.swing.JButton jBuscarAfiliado;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField jDni;
     private javax.swing.JTextField jDocumentoAfiliado;
+    private javax.swing.JTextField jDomicilio;
+    private javax.swing.JButton jEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton jModificar;
+    private javax.swing.JTextField jNombre;
     private javax.swing.JButton jSalida;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTelefono;
+    private javax.swing.JTable jafiliado;
     // End of variables declaration//GEN-END:variables
+ private void armarCabeceraTabla() {
+        ArrayList<Object> filaCabecera = new ArrayList<>();
+        filaCabecera.add("Documento");
+        filaCabecera.add("Nombre");
+        filaCabecera.add("Apellido");
+        filaCabecera.add("domicilio");
+        filaCabecera.add("telefono");
+        filaCabecera.add("Estado");
+        
+        for(Object it: filaCabecera){
+            modelo.addColumn(it);
+        }
+        jafiliado.setModel(modelo);
+    }
+ private void cargardatoDeAfiliados(){
+     
+    listaAfili= (ArrayList<Afiliados>)afiData.listarAfiliados();
+    
+     for(Afiliados afiliado : listaAfili){
+        modelo.addRow(new Object[] {
+        
+            afiliado.getNombre(),
+            afiliado.getApellido(),
+            afiliado.getDni(),
+            afiliado.getDomicilio(),
+            afiliado.getTelefono(),
+            afiliado.isEstado()
+            
+        
+        
+        });
+         
+         System.out.println(afiliado);
+         
+     
+     }
+ 
+ }
+
 }

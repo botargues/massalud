@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import massalud.Entidades.Afiliados;
 
@@ -30,7 +32,7 @@ public class afiliadoData {
 public void guardarAfiliado( Afiliados afiliado){ 
         
         String sql="INSERT INTO afiliados (nombre, apellido, dni, estado)" 
-                + "VALUES(?,?,?,?)";
+                + " VALUES(?,?,?,?)";
         try {        
         
         PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -133,6 +135,41 @@ public void guardarAfiliado( Afiliados afiliado){
         
         
         }
+     
+     public List<Afiliados> listarAfiliados(){
+     
+         List<Afiliados> afiliado = new ArrayList();
+         
+         try{
+         
+             String sql = "SELECT * FROM afiliados WHERE estado = 1 OR estado= 0";
+             
+             try(PreparedStatement ps = con.prepareStatement(sql)){
+                 
+                 ResultSet rs = ps.executeQuery();
+                 
+                 while(rs.next()){
+                     Afiliados afi = new Afiliados();
+                     afi.setNombre(rs.getString("nombre"));
+                     afi.setApellido(rs.getString("apellido"));
+                     afi.setDni(rs.getInt("dni"));
+                     afi.setDomicilio(rs.getString("domicilio"));
+                     afi.setTelefono(rs.getInt("telefono"));
+                     afi.setEstado(rs.getBoolean("estado"));
+                     afiliado.add(afi);
+                 }
+             ps.close();
+             }
+         
+         
+         }catch(SQLException e){
+             JOptionPane.showMessageDialog(null, "error al intenetar obtener los datos de afiliado " +e.getLocalizedMessage());
+         
+         }
+                 
+     return afiliado;
+     
+     }
 
      
      
