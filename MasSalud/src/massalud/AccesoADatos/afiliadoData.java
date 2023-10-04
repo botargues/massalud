@@ -31,8 +31,8 @@ public class afiliadoData {
 
 public void guardarAfiliado( Afiliados afiliado){ 
         
-        String sql="INSERT INTO afiliados (nombre, apellido, dni, estado)" 
-                + " VALUES(?,?,?,?)";
+        String sql="INSERT INTO afiliados (nombre, apellido, dni, domicilio, telefono, estado )" 
+                + " VALUES(?,?,?,?,?,?)";
         try {        
         
         PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -40,7 +40,9 @@ public void guardarAfiliado( Afiliados afiliado){
         ps.setString(1, afiliado.getNombre() );
         ps.setString(2, afiliado.getApellido() );
         ps.setInt(3, afiliado.getDni());
-        ps.setBoolean(4, afiliado.isEstado());
+        ps.setString(4, afiliado.getDomicilio());
+        ps.setInt(5, afiliado.getTelefono());
+        ps.setBoolean(6, afiliado.isEstado());
         
                 
         ps.executeUpdate();
@@ -62,14 +64,16 @@ public void guardarAfiliado( Afiliados afiliado){
     
     public void modificarAfiliado(Afiliados afiliado){
   
-        String sql="UPDATE afiliados SET nombre=?, apellido=?, dni=? "
+        String sql="UPDATE afiliados SET nombre=?, apellido=?, dni=?, domicilio=?, telefono=? "
             + "WHERE idAAfiliados=?";
         try{ 
         PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, afiliado.getNombre());
         ps.setString(2, afiliado.getApellido());        
-        ps.setInt(1, afiliado.getDni());      
-        ps.setInt(3, afiliado.getIdAfiliado());
+        ps.setInt(3, afiliado.getDni()); 
+        ps.setString(4, afiliado.getDomicilio());
+        ps.setInt(5, afiliado.getTelefono());
+        ps.setInt(6, afiliado.getIdAfiliado());
         
         int exito=ps.executeUpdate();
         
@@ -105,7 +109,7 @@ public void guardarAfiliado( Afiliados afiliado){
      public Afiliados buscarAfiliado(int dni){
         
             
-            String sql="SELECT idAfiliados, nombre, apellido, dni FROM afiliados WHERE dni=? AND estado=1";
+            String sql="SELECT idAfiliados, nombre, apellido, dni, domicilio, telefono FROM afiliados WHERE dni=? AND estado=1";
             Afiliados afiliado=null;
            try {    
             PreparedStatement ps=con.prepareStatement(sql);  
@@ -118,6 +122,9 @@ public void guardarAfiliado( Afiliados afiliado){
             afiliado.setIdAfiliado(rs.getInt("idAfiliados")); 
             afiliado.setNombre(rs.getString("nombre"));
             afiliado.setApellido(rs.getString("apellido"));
+            afiliado.setDni(dni);   
+            afiliado.setDomicilio(rs.getString("domicilio"));
+            afiliado.setTelefono(rs.getInt("telefono"));
             afiliado.setEstado(true);
             
             } else {
