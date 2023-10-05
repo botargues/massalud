@@ -7,7 +7,7 @@ package Vistas;
 
 /**
  *
- * @author sergi
+ * @author Dadienka
  */
 public class VistaMenuListados extends javax.swing.JInternalFrame {
 

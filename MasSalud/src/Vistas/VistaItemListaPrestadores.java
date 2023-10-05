@@ -6,7 +6,7 @@ package Vistas;
 
 /**
  *
- * @author Usuario
+ * @author Sergio
  */
 public class VistaItemListaPrestadores extends javax.swing.JInternalFrame {
 
