@@ -34,6 +34,9 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jAfiliados = new javax.swing.JMenu();
         jPrestadores = new javax.swing.JMenu();
         jListados = new javax.swing.JMenu();
+        jLAfiliadosAct = new javax.swing.JMenuItem();
+        jPrestadoresAct = new javax.swing.JMenuItem();
+        jOrdenSegunFecha = new javax.swing.JMenuItem();
         jSalida = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -93,6 +96,31 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 jListadosMouseClicked(evt);
             }
         });
+
+        jLAfiliadosAct.setText("Listas de Afiliados");
+        jLAfiliadosAct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLAfiliadosActActionPerformed(evt);
+            }
+        });
+        jListados.add(jLAfiliadosAct);
+
+        jPrestadoresAct.setText("Listas de Prestadores");
+        jPrestadoresAct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPrestadoresActActionPerformed(evt);
+            }
+        });
+        jListados.add(jPrestadoresAct);
+
+        jOrdenSegunFecha.setText("Listas de Orden Emitida");
+        jOrdenSegunFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jOrdenSegunFechaActionPerformed(evt);
+            }
+        });
+        jListados.add(jOrdenSegunFecha);
+
         jMenuBar1.add(jListados);
 
         jSalida.setText("Salida");
@@ -164,14 +192,40 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     private void jListadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListadosMouseClicked
         // TODO add your handling code here:
+        
+    
+    }//GEN-LAST:event_jListadosMouseClicked
+
+    private void jLAfiliadosActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLAfiliadosActActionPerformed
+        // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaMenuListados list=new VistaMenuListados();
         list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
-    
-    }//GEN-LAST:event_jListadosMouseClicked
+        
+    }//GEN-LAST:event_jLAfiliadosActActionPerformed
+
+    private void jPrestadoresActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestadoresActActionPerformed
+        // TODO add your handling code here:
+        jEscritorio.removeAll();
+        jEscritorio.repaint();
+        VistaItemListaPrestadores list = new VistaItemListaPrestadores();
+        list.setVisible(true);
+        jEscritorio.add(list);
+        jEscritorio.moveToFront(list);
+    }//GEN-LAST:event_jPrestadoresActActionPerformed
+
+    private void jOrdenSegunFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOrdenSegunFechaActionPerformed
+        // TODO add your handling code here:
+        jEscritorio.removeAll();
+        jEscritorio.repaint();
+        VistaItemListaOrden list = new VistaItemListaOrden();
+        list.setVisible(true);
+        jEscritorio.add(list);
+        jEscritorio.moveToFront(list);
+    }//GEN-LAST:event_jOrdenSegunFechaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,10 +265,13 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jAfiliados;
     private javax.swing.JDesktopPane jEscritorio;
+    private javax.swing.JMenuItem jLAfiliadosAct;
     private javax.swing.JMenu jListados;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jOrdenSegunFecha;
     private javax.swing.JMenu jPrestadores;
+    private javax.swing.JMenuItem jPrestadoresAct;
     private javax.swing.JMenu jSalida;
     // End of variables declaration//GEN-END:variables
 }

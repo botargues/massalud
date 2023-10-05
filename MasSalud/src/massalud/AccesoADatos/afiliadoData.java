@@ -149,7 +149,7 @@ public void guardarAfiliado( Afiliados afiliado){
          
          try{
          
-             String sql = "SELECT * FROM afiliados WHERE estado = 1 OR estado= 0";
+             String sql = "SELECT * FROM afiliados ORDER BY apellido ASC";
              
              try(PreparedStatement ps = con.prepareStatement(sql)){
                  
