@@ -65,21 +65,21 @@ public void guardarAfiliado( Afiliados afiliado){
     public void modificarAfiliado(Afiliados afiliado){
   
         String sql="UPDATE afiliados SET nombre=?, apellido=?, dni=?, domicilio=?, telefono=? "
-            + "WHERE idAAfiliados=?";
+            + "WHERE idAfiliados=?";
         try{ 
-        PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, afiliado.getNombre());
-        ps.setString(2, afiliado.getApellido());        
-        ps.setInt(3, afiliado.getDni()); 
-        ps.setString(4, afiliado.getDomicilio());
-        ps.setInt(5, afiliado.getTelefono());
-        ps.setInt(6, afiliado.getIdAfiliado());
+            PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, afiliado.getNombre());
+            ps.setString(2, afiliado.getApellido());        
+            ps.setInt(3, afiliado.getDni()); 
+            ps.setString(4, afiliado.getDomicilio());
+            ps.setInt(5, afiliado.getTelefono());
+            ps.setInt(6, afiliado.getIdAfiliado());
         
-        int exito=ps.executeUpdate();
+            int exito=ps.executeUpdate();
         
-        if(exito==1){
-         JOptionPane.showMessageDialog(null, "Afiliado Modificado");
-         }
+            if(exito==1){
+                JOptionPane.showMessageDialog(null, "Afiliado Modificado");
+            }
 
         } catch(SQLException ex){
              
