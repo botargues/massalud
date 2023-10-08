@@ -15,11 +15,11 @@ public class Prestador {
     private String apellido;
     private int dni;
     private String domicilio;
-    private int telefono;
+    private long telefono;
     private boolean estado;
     private Especialidad especialidad;
 
-    public Prestador(int idPrestador, String nombre, String apellido, int dni, String domicilio, int telefono, boolean estado, Especialidad especialidad) {
+    public Prestador(int idPrestador, String nombre, String apellido, int dni, String domicilio, long telefono, boolean estado, Especialidad especialidad) {
         this.idPrestador = idPrestador;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -30,7 +30,7 @@ public class Prestador {
         this.especialidad = especialidad;
     }
 
-    public Prestador(String nombre, String apellido, int dni, String domicilio, int telefono, boolean estado, Especialidad especialidad) {
+    public Prestador(String nombre, String apellido, int dni, String domicilio, long telefono, boolean estado, Especialidad especialidad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -84,11 +84,11 @@ public class Prestador {
         this.domicilio = domicilio;
     }
 
-    public int getTelefono() {
+    public long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(long telefono) {
         this.telefono = telefono;
     }
 
@@ -105,7 +105,7 @@ public class Prestador {
     }
 
     public void setEspecialidad(Especialidad especialidad) {
-        this.especialidad = especialidad;
+       this.especialidad = especialidad;
     }
 
     @Override
