@@ -41,7 +41,7 @@ public void guardarAfiliado( Afiliados afiliado){
         ps.setString(2, afiliado.getApellido() );
         ps.setInt(3, afiliado.getDni());
         ps.setString(4, afiliado.getDomicilio());
-        ps.setInt(5, afiliado.getTelefono());
+        ps.setLong(5, afiliado.getTelefono());
         ps.setBoolean(6, afiliado.isEstado());
         
                 
@@ -72,7 +72,7 @@ public void guardarAfiliado( Afiliados afiliado){
         ps.setString(2, afiliado.getApellido());        
         ps.setInt(3, afiliado.getDni()); 
         ps.setString(4, afiliado.getDomicilio());
-        ps.setInt(5, afiliado.getTelefono());
+        ps.setLong(5, afiliado.getTelefono());
         ps.setInt(6, afiliado.getIdAfiliado());
         
         int exito=ps.executeUpdate();
@@ -124,7 +124,7 @@ public void guardarAfiliado( Afiliados afiliado){
             afiliado.setApellido(rs.getString("apellido"));
             afiliado.setDni(dni);   
             afiliado.setDomicilio(rs.getString("domicilio"));
-            afiliado.setTelefono(rs.getInt("telefono"));
+            afiliado.setTelefono(rs.getLong("telefono"));
             afiliado.setEstado(true);
             
             } else {
@@ -161,7 +161,7 @@ public void guardarAfiliado( Afiliados afiliado){
                      afi.setApellido(rs.getString("apellido"));
                      afi.setDni(rs.getInt("dni"));
                      afi.setDomicilio(rs.getString("domicilio"));
-                     afi.setTelefono(rs.getInt("telefono"));
+                     afi.setTelefono(rs.getLong("telefono"));
                      afi.setEstado(rs.getBoolean("estado"));
                      afiliado.add(afi);
                  }

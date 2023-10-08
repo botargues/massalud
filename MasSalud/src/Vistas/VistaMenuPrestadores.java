@@ -5,17 +5,27 @@
  */
 package Vistas;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import massalud.AccesoADatos.especialidadData;
+import massalud.AccesoADatos.prestadorData;
+import massalud.Entidades.*;
+
 /**
  *
  * @author sergi
  */
 public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
-
+    private prestadorData prest = new prestadorData();
+    private especialidadData esp = new especialidadData();
+    private ArrayList<Especialidad> listaEsp;
     /**
      * Creates new form VistaMenuPrestadores
      */
     public VistaMenuPrestadores() {
         initComponents();
+        listaEsp = (ArrayList<Especialidad>)esp.listarEspecialidades();
+        cargarCheckBox();
     }
 
     /**
@@ -30,7 +40,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jSalida = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jDocumento = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -43,10 +53,10 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jEstado = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
-        jEspecialidad = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jAgregar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jCombo = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("PRESTADORES");
@@ -86,7 +96,12 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Especialidad:");
 
-        jButton2.setText("Agregar");
+        jAgregar.setText("Agregar");
+        jAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAgregarActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Eliminar");
 
@@ -109,17 +124,17 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jEstado)
-                                .addComponent(jTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jTelefono)
+                                .addComponent(jCombo, 0, 195, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(43, 43, 43))
@@ -130,7 +145,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addComponent(jButton2)
+                        .addComponent(jAgregar)
                         .addGap(29, 29, 29)
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
@@ -146,7 +161,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
@@ -166,17 +181,17 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                     .addComponent(jTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jEstado))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jEstado)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jSalida)
-                    .addComponent(jButton2)
+                    .addComponent(jAgregar)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -198,15 +213,86 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTelefonoActionPerformed
 
+    private void jAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgregarActionPerformed
+        // TODO add your handling code here:
+        try{
+            String dniTexto = jDocumento.getText();
+            String telefonoTexto = jTelefono.getText();
+            
+            //validacion de cantidad de caracteres en documento y telefono celular
+            if(telefonoTexto.length() != 10){
+                JOptionPane.showMessageDialog(null, "el numero de telefono es muy corto o paso los limites de 10 digitos");
+                return;
+            }
+            
+            if(dniTexto.length()!= 8){
+                JOptionPane.showMessageDialog(null, "el numero de Documento es invalido");
+                return;
+            }
+            
+            int dni = Integer.parseInt(dniTexto);
+            String nombre = jNombre.getText();
+            String apellido = jApellido.getText();
+            String domicilio = jDomicilio.getText();
+            long telefono = Long.parseLong(telefonoTexto);
+            boolean estado =  jEstado.isSelected();
+        
+            Especialidad es = (Especialidad)jCombo.getSelectedItem();
+        
+        //Validacion de datos ingresados en nombre, apellido,domicilio
+        if(!esString(nombre)){
+            throw new IllegalArgumentException("el bloque nombre es invalido, Revicelo por favor");
+        }else if(!esString(apellido)){
+            throw new IllegalArgumentException("el bloque apellido es invalido, Revicelo por favor");
+        }else if(!esString(domicilio)){
+            throw new IllegalArgumentException("el bloque domicilio es invalido, Revicelo por favor");
+        }
+         //validacion de si existe el documento   
+        if(prest.ValidacionDni(dni)){
+        
+            JOptionPane.showMessageDialog(null, "El dni o documento ya esta en la Base de Datos");
+            eliminardtos();
+        
+        }else{
+            System.out.println("hola");
+         Prestador agregarPrestador = new Prestador();
+        
+            agregarPrestador.setDni(dni);
+            agregarPrestador.setNombre(nombre);
+            agregarPrestador.setApellido(apellido);
+            agregarPrestador.setDomicilio(domicilio);
+            agregarPrestador.setTelefono(telefono);
+            agregarPrestador.setEstado(estado);
+            agregarPrestador.setEspecialidad(es);
+            prest.guardarPrestadores(agregarPrestador);
+        
+            System.out.println(agregarPrestador);
+        
+        }
+            
+        }catch(NumberFormatException e){
+        
+        JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }catch(NullPointerException e){
+        
+            JOptionPane.showMessageDialog(null,"Hay datos vacios"+ e.getLocalizedMessage());
+        
+        }catch(IllegalArgumentException ex){
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos "+ ex.getLocalizedMessage());
+            
+        }
+    }//GEN-LAST:event_jAgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jAgregar;
     private javax.swing.JTextField jApellido;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<Especialidad> jCombo;
+    private javax.swing.JTextField jDocumento;
     private javax.swing.JTextField jDomicilio;
-    private javax.swing.JTextField jEspecialidad;
     private javax.swing.JRadioButton jEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -219,6 +305,35 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jNombre;
     private javax.swing.JButton jSalida;
     private javax.swing.JTextField jTelefono;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+ public void eliminardtos(){
+     
+     jDocumento.setText("");
+     jNombre.setText("");
+     jApellido.setText("");
+     jDomicilio.setText("");
+     jTelefono.setText("");
+     jEstado.setSelected(false);
+ }
+ 
+ public void cargarCheckBox(){
+     
+     for(Especialidad ep : listaEsp){
+         
+         jCombo.addItem(ep);
+     }
+ 
+ 
+ }
+ 
+ private boolean esString(String letra){
+ 
+     if(letra == null || letra.trim().isEmpty()){
+     return false;
+     
+     }
+     return letra.matches("^[a-zA-Z ]+$");
+ }
+ 
 }
+
