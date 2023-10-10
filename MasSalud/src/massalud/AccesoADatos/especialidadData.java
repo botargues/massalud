@@ -52,4 +52,38 @@ public class especialidadData {
     }
     
     
+    public Especialidad obtenerIdEspecialida(int idEspecialidad){
+     
+         String sql = "SELECT idEspecialidad, Especialidad FROM especialidad WHERE idEspecialidad = ? ";
+        Especialidad idEsp = null;
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idEspecialidad);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                
+                
+                
+                idEsp = new Especialidad();
+                
+                idEsp.setIdEspecialidad(rs.getInt("idEspecialidad"));
+                idEsp.setNomEspecialidad(rs.getString("Especialidad"));
+                
+            }
+            
+        }catch(SQLException e){
+             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla al Alumno");
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "error: "+e.getLocalizedMessage());
+        }
+        return idEsp;
+     
+     }
+    
+    
+    
+    
 }

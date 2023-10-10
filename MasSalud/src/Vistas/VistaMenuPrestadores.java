@@ -41,7 +41,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         jSalida = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jDocumento = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jBuscar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jNombre = new javax.swing.JTextField();
@@ -54,8 +54,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         jEstado = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         jAgregar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jEliminar = new javax.swing.JButton();
+        jModificar = new javax.swing.JButton();
         jCombo = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -70,7 +70,14 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Documento:");
 
-        jButton1.setText("Buscar");
+        jBuscar.setBackground(new java.awt.Color(92, 210, 230));
+        jBuscar.setForeground(new java.awt.Color(51, 51, 51));
+        jBuscar.setText("Buscar");
+        jBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Nombre:");
 
@@ -96,6 +103,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Especialidad:");
 
+        jAgregar.setBackground(new java.awt.Color(51, 255, 0));
+        jAgregar.setForeground(new java.awt.Color(51, 51, 51));
         jAgregar.setText("Agregar");
         jAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,9 +112,13 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("Eliminar");
+        jEliminar.setBackground(new java.awt.Color(255, 0, 0));
+        jEliminar.setForeground(new java.awt.Color(51, 51, 51));
+        jEliminar.setText("Eliminar");
 
-        jButton4.setText("Modificar");
+        jModificar.setBackground(new java.awt.Color(249, 148, 23));
+        jModificar.setForeground(new java.awt.Color(51, 51, 51));
+        jModificar.setText("Modificar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,7 +149,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                                 .addComponent(jTelefono)
                                 .addComponent(jCombo, 0, 195, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jBuscar)
                 .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,13 +159,13 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jAgregar)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jModificar)
+                        .addGap(18, 18, 18)
                         .addComponent(jSalida)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +176,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jButton1))
+                    .addComponent(jBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -192,8 +205,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jSalida)
                     .addComponent(jAgregar)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jEliminar)
+                    .addComponent(jModificar))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -283,16 +296,69 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jAgregarActionPerformed
 
+    private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
+        // TODO add your handling code here
+        //1.Intentar actualizar los datos de jComboxs
+        try{
+            int documento = Integer.parseInt(jDocumento.getText());
+            Prestador pres = prest.buscarPrestadorDni(documento);
+            
+            System.out.println(pres);
+            
+            if(pres != null){
+                
+              
+                jNombre.setText(pres.getNombre());
+                jApellido.setText(pres.getApellido());
+                jDocumento.setText(String.valueOf(pres.getDni()));
+                jDomicilio.setText(pres.getDomicilio());
+                jTelefono.setText(String.valueOf(pres.getTelefono()));
+                jEstado.setSelected(pres.isEstado());
+                
+                if (pres.getEspecialidad() != null ) {
+                    Especialidad especial = pres.getEspecialidad();
+                    System.out.println(especial);
+                    
+                    for(int i = 0 ; i < jCombo.getItemCount(); i++){
+                        Especialidad especialidaCombo = jCombo.getItemAt(i);
+   
+                        if(especial.equals(especialidaCombo)){
+                            jCombo.setSelectedItem(i);
+                            System.out.println(i);
+                            break;
+                        }else{
+                            JOptionPane.showMessageDialog(null, "No se a podido encontrar la especialida de dicho ducumento");
+                        }
+                    
+                    }
+                    
+                
+                } else {
+                JOptionPane.showMessageDialog(null, "no se pudo obtener el dato de Especialidad");
+                }
+                
+                jCombo.setSelectedItem(pres.getEspecialidad());
+            }else{
+                eliminardtos();
+            }
+            
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios "+e.getLocalizedMessage());
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "el documento no esta registrado en la Base de Datos");
+        }
+        
+    }//GEN-LAST:event_jBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAgregar;
     private javax.swing.JTextField jApellido;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jBuscar;
     private javax.swing.JComboBox<Especialidad> jCombo;
     private javax.swing.JTextField jDocumento;
     private javax.swing.JTextField jDomicilio;
+    private javax.swing.JButton jEliminar;
     private javax.swing.JRadioButton jEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -302,6 +368,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JButton jModificar;
     private javax.swing.JTextField jNombre;
     private javax.swing.JButton jSalida;
     private javax.swing.JTextField jTelefono;
@@ -317,7 +384,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
  }
  
  public void cargarCheckBox(){
-     
+//     Especialidad e = new Especialidad(0," ");
+//     jCombo.addItem(e);
      for(Especialidad ep : listaEsp){
          
          jCombo.addItem(ep);

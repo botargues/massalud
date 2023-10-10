@@ -6,6 +6,10 @@
 package massalud;
 
 import Vistas.VistaMenuPrincipal;
+import massalud.AccesoADatos.especialidadData;
+import massalud.AccesoADatos.prestadorData;
+import massalud.Entidades.*;
+
 
 /**
  *
@@ -18,7 +22,18 @@ public class MasSalud {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        VistaMenuPrincipal.main(args);
+        //VistaMenuPrincipal.main(args);
+        prestadorData pro = new prestadorData();
+        especialidadData ns = new especialidadData();
+        Especialidad esp = new Especialidad(1,"cirujano");
+        Prestador pres = new Prestador("juan","Rodriges",12345678,"El campo papa", 1234567890, true,esp);
+        
+        pro.buscarPrestadorDni(  12457893);
+        //ns.obtenerIdEspecialida(1);
+    
     }
+    
+    
+    
     
 }

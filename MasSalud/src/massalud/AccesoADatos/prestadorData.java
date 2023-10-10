@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import massalud.Entidades.Especialidad;
 import massalud.Entidades.Prestador;
 
 /**
@@ -18,6 +19,7 @@ import massalud.Entidades.Prestador;
  */
 public class prestadorData {
     private Connection con =null;
+  
 
     public prestadorData() {
         con = Conexion.getConexion();
@@ -74,5 +76,45 @@ public class prestadorData {
     
     return  false;
     
+    }
+    
+     public Prestador buscarPrestadorDni(int dni){
+        Prestador prestado=null;
+        
+        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=1";
+        
+        PreparedStatement ss=null;
+        especialidadData esp = new especialidadData();
+        
+        try {
+            ss=con.prepareStatement(sql);
+            ss.setInt(1,dni);
+            ResultSet rs=ss.executeQuery();
+            System.out.println(rs);
+            if (rs.next()){
+                
+                prestado=new Prestador();
+                prestado.setNombre(rs.getString("nombre"));
+                prestado.setApellido(rs.getString("apellido"));
+                prestado.setDni(rs.getInt("dni"));
+                prestado.setDomicilio(rs.getString("domicilio"));
+                prestado.setTelefono(rs.getLong("telefono"));
+                prestado.setEstado(rs.getBoolean("estado"));
+//                System.out.println(prestado);
+                
+                int IdEspecialidad = rs.getInt("idEspecialidad");
+                Especialidad especialidad = esp.obtenerIdEspecialida(IdEspecialidad);
+                
+                prestado.setEspecialidad(especialidad);
+                //System.out.println(especialidad);
+                //System.out.println(prestado);
+            }else{
+                JOptionPane.showMessageDialog(null,"No existe el prestador");
+                ss.close();
+            }
+        } catch (SQLException xx){
+            JOptionPane.showMessageDialog(null,"Error alacceder a la tabla prestador "+xx.getLocalizedMessage());
+        }
+        return prestado;
     }
 }

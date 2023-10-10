@@ -6,8 +6,7 @@
 package Vistas;
 
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +15,7 @@ import massalud.Entidades.Afiliados;
 
 /**
  *
- * @author sergi
+ * @author Danienka
  */
 public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
     private DefaultTableModel modelo;

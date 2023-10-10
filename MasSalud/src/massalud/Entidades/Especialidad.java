@@ -4,6 +4,8 @@
  */
 package massalud.Entidades;
 
+import java.util.Objects;
+
 /**
  *
  * @author juanBenavides
@@ -40,6 +42,19 @@ public class Especialidad {
     public String toString() {
         return  "id: "+idEspecialidad+"-"+NomEspecialidad;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        
+        if(obj == null || getClass() != obj.getClass()) return false;
+        
+        Especialidad otro = (Especialidad) obj;
+        
+        return Objects.equals(this.idEspecialidad, otro.idEspecialidad) && Objects.equals(this.NomEspecialidad, otro.NomEspecialidad);
+        
+    }
+    
     
     
 }
