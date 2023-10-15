@@ -78,10 +78,10 @@ public class prestadorData {
     
     }
     
-     public Prestador buscarPrestadorDni(int dni){
+    public Prestador buscarPrestadorDni(int dni){
         Prestador prestado=null;
         
-        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=1";
+        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=1 OR estado = 0";
         
         PreparedStatement ss=null;
         especialidadData esp = new especialidadData();
@@ -116,5 +116,51 @@ public class prestadorData {
             JOptionPane.showMessageDialog(null,"Error alacceder a la tabla prestador "+xx.getLocalizedMessage());
         }
         return prestado;
+    }
+     
+    public void modificarPrestador(Prestador prestador){
+    
+        String sql = "UPDATE prestador SET nombre = ?, apellido = ?, dni = ?, domicilio = ?, telefono = ?, estado = ?, idEspecialidad = ? WHERE dni = ?";
+    
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ps.setString(1, prestador.getNombre());
+            ps.setString(2, prestador.getApellido());
+            ps.setInt(3, prestador.getDni());
+            ps.setString(4, prestador.getDomicilio());
+            ps.setLong(5, prestador.getTelefono());
+            ps.setBoolean(6, prestador.isEstado());
+            ps.setInt(7, prestador.getEspecialidad().getIdEspecialidad());
+            ps.setInt(8, prestador.getDni());
+            int exito = ps.executeUpdate();
+            
+            if(exito==1){
+                
+                JOptionPane.showMessageDialog(null,"Prestador Modificado Exitosamente");
+            }
+            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla prestador"+ ex);
+        }
+    }
+    
+    public void eliminarPrestadro(int dni){
+        
+        String sql = "UPDATE prestador SET estado = 0 WHERE dni = ?";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            int exito =ps.executeUpdate();
+            
+            if (exito ==1) {
+                JOptionPane.showMessageDialog(null, "Prestador Borrado");
+            }
+            
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla al Prestador"+ ex);
+        }
+    
     }
 }

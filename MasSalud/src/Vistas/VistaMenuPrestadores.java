@@ -26,6 +26,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         initComponents();
         listaEsp = (ArrayList<Especialidad>)esp.listarEspecialidades();
         cargarCheckBox();
+        jModificar.setEnabled(false);
+        jEliminar.setEnabled(false);
     }
 
     /**
@@ -115,10 +117,20 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         jEliminar.setBackground(new java.awt.Color(255, 0, 0));
         jEliminar.setForeground(new java.awt.Color(51, 51, 51));
         jEliminar.setText("Eliminar");
+        jEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEliminarActionPerformed(evt);
+            }
+        });
 
         jModificar.setBackground(new java.awt.Color(249, 148, 23));
         jModificar.setForeground(new java.awt.Color(51, 51, 51));
         jModificar.setText("Modificar");
+        jModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -307,7 +319,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
             
             if(pres != null){
                 
-              
+        
+                
                 jNombre.setText(pres.getNombre());
                 jApellido.setText(pres.getApellido());
                 jDocumento.setText(String.valueOf(pres.getDni()));
@@ -326,8 +339,6 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                             jCombo.setSelectedItem(i);
                             System.out.println(i);
                             break;
-                        }else{
-                            JOptionPane.showMessageDialog(null, "No se a podido encontrar la especialida de dicho ducumento");
                         }
                     
                     }
@@ -338,6 +349,9 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 }
                 
                 jCombo.setSelectedItem(pres.getEspecialidad());
+                jEliminar.setEnabled(true);
+                jModificar.setEnabled(true);
+                jAgregar.setEnabled(false);
             }else{
                 eliminardtos();
             }
@@ -349,6 +363,102 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jBuscarActionPerformed
+
+    private void jModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModificarActionPerformed
+        // TODO add your handling code here:
+        try{
+        
+            String dniTexto = jDocumento.getText();
+            String telTexto = jTelefono.getText();
+            
+            if(dniTexto.length() != 8){
+                JOptionPane.showMessageDialog(null, "el numero de Documento es invalido");
+                return;
+            }
+            if(telTexto.length() != 10){
+                JOptionPane.showMessageDialog(null, "el numero de telefono es muy corto o paso los limites de 10 digitos");
+                return;
+            }
+            
+            int dni = Integer.parseInt(dniTexto);
+            String nombre = jNombre.getText();
+            String apellido = jApellido.getText();
+            String domicilio = jDomicilio.getText();
+            long telefono = Long.parseLong(telTexto);
+            boolean estado =  jEstado.isSelected();
+          
+        
+            Especialidad es = (Especialidad)jCombo.getSelectedItem();
+        
+        //Validacion de datos ingresados en nombre, apellido,domicilio
+        if(!esString(nombre)){
+            throw new IllegalArgumentException("el bloque nombre es invalido, Revicelo por favor");
+        }else if(!esString(apellido)){
+            throw new IllegalArgumentException("el bloque apellido es invalido, Revicelo por favor");
+        }else if(!esString(domicilio)){
+            throw new IllegalArgumentException("el bloque domicilio es invalido, Revicelo por favor");
+        }
+            
+         Prestador modificarPrestador = new Prestador();
+         
+         modificarPrestador.setDni(dni);
+         modificarPrestador.setNombre(nombre);
+         modificarPrestador.setApellido(apellido);
+         modificarPrestador.setDomicilio(domicilio);
+         modificarPrestador.setTelefono(telefono);
+         
+      
+         modificarPrestador.setEstado(estado);
+ 
+         
+         modificarPrestador.setEspecialidad(es);
+         
+         prest.modificarPrestador(modificarPrestador);
+         
+        
+         eliminardtos();
+        }catch(NumberFormatException e){
+        
+        JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        
+        }catch(NullPointerException e){
+        
+            JOptionPane.showMessageDialog(null,"Hay datos vacios"+ e.getLocalizedMessage());
+        }
+    }//GEN-LAST:event_jModificarActionPerformed
+
+    private void jEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if(jEliminar.isEnabled() == true){
+                
+                 int dni = Integer.parseInt(jDocumento.getText());
+            
+            Prestador eliminarprestador = prest.buscarPrestadorDni(dni);
+            
+            if(eliminarprestador != null){
+                
+                int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas seguro de que deseas eliminar a : "+eliminarprestador.getApellido()
+                + " "+eliminarprestador.getNombre()+ "?",
+                        "Confirmar Eliminacion",
+                        JOptionPane.YES_NO_OPTION
+                        );
+                
+                if(confirmacion == JOptionPane.YES_OPTION){
+                    prest.eliminarPrestadro(dni);
+                    eliminardtos();
+                   
+                }else{
+                    JOptionPane.showMessageDialog(null, "Se cancelo la operacion");
+                }
+            
+            }
+                
+                
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -381,11 +491,17 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
      jDomicilio.setText("");
      jTelefono.setText("");
      jEstado.setSelected(false);
+   
+     jCombo.setSelectedIndex(0);
+     
+     jAgregar.setEnabled(true);
+     jEliminar.setEnabled(false);
+     jModificar.setEnabled(false);
  }
  
  public void cargarCheckBox(){
-//     Especialidad e = new Especialidad(0," ");
-//     jCombo.addItem(e);
+     Especialidad e = new Especialidad(0," ");
+     jCombo.addItem(e);
      for(Especialidad ep : listaEsp){
          
          jCombo.addItem(ep);
