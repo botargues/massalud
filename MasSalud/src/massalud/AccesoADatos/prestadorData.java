@@ -12,7 +12,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import massalud.Entidades.Especialidad;
 import massalud.Entidades.Prestador;
-
+import java.util.ArrayList;
 /**
  *
  * @author Ignacio Benavides
@@ -163,4 +163,39 @@ public class prestadorData {
         }
     
     }
+    
+    
+    public ArrayList<Prestador> listarPrestador(){
+        
+            
+           String sql="SELECT idPrestador,nombre, apellido,dni,domicilio,telefono FROM prestador WHERE estado=1"; 
+           ArrayList<Prestador> prestadores=new ArrayList<>();
+         try {    
+            PreparedStatement ps=con.prepareStatement(sql);  
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){       
+            
+              Prestador pres=new Prestador(); 
+              pres.setIdPrestador(rs.getInt("idPrestador")); 
+              pres.setNombre(rs.getString("nombre"));
+              pres.setApellido(rs.getString("apellido"));
+              pres.setDni(rs.getInt("dni"));
+              pres.setDomicilio(rs.getString("domicilio"));
+              pres.setTelefono(rs.getLong("telefono"));
+              pres.setEstado(true);
+              
+               prestadores.add( pres);
+            
+              
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Prestador");
+        }
+        
+        return prestadores;         
+        
+        
+        }
+
 }
