@@ -180,7 +180,7 @@ public void guardarAfiliado( Afiliados afiliado){
      public List<Afiliados> listarAfiliadosActivos(){
          
            
-        String sql="SELECT idAfiliados,nombre, apellido, dni,domicilio,telefono FROM afiliados WHERE estado=1";
+        String sql="SELECT idAfiliados ,nombre , apellido, dni ,domicilio ,telefono, estado FROM afiliados WHERE estado=1";
         ArrayList<Afiliados> afiliados=new ArrayList<>();
         
         
@@ -191,7 +191,7 @@ public void guardarAfiliado( Afiliados afiliado){
              
                      
         Afiliados afi = new Afiliados();
-         afi.setIdAfiliado(rs.getInt("idAfiliado"));
+         afi.setIdAfiliado(rs.getInt("idAfiliados"));
          afi.setNombre(rs.getString("nombre"));
          afi.setApellido(rs.getString("apellido"));
          afi.setDni(rs.getInt("dni"));
