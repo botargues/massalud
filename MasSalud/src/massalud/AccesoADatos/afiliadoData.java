@@ -143,44 +143,75 @@ public void guardarAfiliado( Afiliados afiliado){
         
         }
      
-     public List<Afiliados> listarAfiliados(){
-     
-         List<Afiliados> afiliado = new ArrayList();
+     public List<Afiliados> listarAfiliadosNoActivos(){
          
-         try{
-         
-             String sql = "SELECT * FROM afiliados ORDER BY apellido ASC";
+        String sql="SELECT idAfiliados,nombre, apellido, dni,domicilio,telefono FROM afiliados WHERE estado=0"; 
+        ArrayList<Afiliados> afiliados=new ArrayList<>();
+        
+        
+        try{     
+        PreparedStatement ps=con.prepareStatement(sql);  //generamos el preparedstament con la conexion  y pasamos la sentencia sql
+        ResultSet rs=ps.executeQuery(); 
+        while(rs.next()){   
              
-             try(PreparedStatement ps = con.prepareStatement(sql)){
-                 
-                 ResultSet rs = ps.executeQuery();
-                 
-                 while(rs.next()){
-                     Afiliados afi = new Afiliados();
-                     afi.setNombre(rs.getString("nombre"));
-                     afi.setApellido(rs.getString("apellido"));
-                     afi.setDni(rs.getInt("dni"));
-                     afi.setDomicilio(rs.getString("domicilio"));
-                     afi.setTelefono(rs.getLong("telefono"));
-                     afi.setEstado(rs.getBoolean("estado"));
-                     afiliado.add(afi);
-                 }
-             ps.close();
-             }
+         Afiliados afi = new Afiliados();
+         afi.setNombre(rs.getString("nombre"));
+         afi.setApellido(rs.getString("apellido"));
+         afi.setDni(rs.getInt("dni"));
+         afi.setDomicilio(rs.getString("domicilio"));
+         afi.setTelefono(rs.getLong("telefono"));
+         afi.setEstado(rs.getBoolean("estado"));
+         afiliados.add(afi);
+        }
+        ps.close();          
+        
          
-         
-         }catch(SQLException e){
+       }catch(SQLException e){
              JOptionPane.showMessageDialog(null, "error al intenetar obtener los datos de afiliado " +e.getLocalizedMessage());
          
          }
                  
-     return afiliado;
+     return afiliados;
      
      }
-
      
      
      
+     public List<Afiliados> listarAfiliadosActivos(){
+         
+           
+        String sql="SELECT idAfiliados,nombre, apellido, dni,domicilio,telefono FROM afiliados WHERE estado=1";
+        ArrayList<Afiliados> afiliados=new ArrayList<>();
+        
+        
+        try{     
+        PreparedStatement ps=con.prepareStatement(sql);  //generamos el preparedstament con la conexion  y pasamos la sentencia sql
+        ResultSet rs=ps.executeQuery(); 
+        while(rs.next()){   
+             
+                     
+        Afiliados afi = new Afiliados();
+         afi.setIdAfiliado(rs.getInt("idAfiliado"));
+         afi.setNombre(rs.getString("nombre"));
+         afi.setApellido(rs.getString("apellido"));
+         afi.setDni(rs.getInt("dni"));
+         afi.setDomicilio(rs.getString("domicilio"));
+         afi.setTelefono(rs.getLong("telefono"));
+         afi.setEstado(rs.getBoolean("estado"));
+         afiliados.add(afi);
+        }
+        ps.close();          
+        
+         
+         }catch(SQLException e){
+       
+             JOptionPane.showMessageDialog(null, "error al intenetar obtener los datos de afiliado " +e.getLocalizedMessage());
+         
+         }
+                 
+    
+     return afiliados;
      
+     }
      
 }
