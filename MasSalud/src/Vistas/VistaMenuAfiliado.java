@@ -17,9 +17,7 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
  
     private afiliadoData afiData= new afiliadoData();
     private Afiliados afiliadoActual=null;
-    /**
-     * Creates new form VistaMenuAfiliado
-     */
+    
     public VistaMenuAfiliado() {
         initComponents();       
       
@@ -326,7 +324,7 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
             } 
         
         } catch(NumberFormatException nf ){
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI valido");
+            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI correcto");
         }
     }//GEN-LAST:event_jModificarActionPerformed
 
