@@ -310,7 +310,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
 
     private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
         // TODO add your handling code here
-        //1.Intentar actualizar los datos de jComboxs
+       
         try{
             int documento = Integer.parseInt(jDocumento.getText());
             Prestador pres = prest.buscarPrestadorDni(documento);
@@ -353,7 +353,16 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 jModificar.setEnabled(true);
                 jAgregar.setEnabled(false);
             }else{
-                eliminardtos();
+                int confirmacion = JOptionPane.showConfirmDialog( null, "El dni :"+ documento + " No Esta registrado, Desea Agregar el dni y los datos de este prestador?",
+                        " ",
+                        JOptionPane.YES_NO_OPTION);
+                
+                if(confirmacion == JOptionPane.YES_OPTION){
+                    return;
+                }else{
+                  eliminardtos();
+                }
+     
             }
             
         }catch(NullPointerException e){

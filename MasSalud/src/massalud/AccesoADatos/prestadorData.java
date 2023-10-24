@@ -109,7 +109,7 @@ public class prestadorData {
                 //System.out.println(especialidad);
                 //System.out.println(prestado);
             }else{
-                JOptionPane.showMessageDialog(null,"No existe el prestador");
+                JOptionPane.showMessageDialog(null,"prestador no registrado");
                 ss.close();
             }
         } catch (SQLException xx){

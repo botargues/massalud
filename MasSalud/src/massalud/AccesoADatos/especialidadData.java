@@ -75,7 +75,7 @@ public class especialidadData {
             }
             
         }catch(SQLException e){
-             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla al Alumno");
+             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Especialidades");
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "error: "+e.getLocalizedMessage());
         }
