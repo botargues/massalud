@@ -3,7 +3,6 @@ package Vistas;
 
 
 
-
 import javax.swing.JOptionPane;
 import massalud.AccesoADatos.afiliadoData;
 import massalud.Entidades.Afiliados;
@@ -13,17 +12,21 @@ import massalud.Entidades.Afiliados;
  * @author Danienka
  */
 public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
+
    
  
     private afiliadoData afiData= new afiliadoData();
     private Afiliados afiliadoActual=null;
     
+
+
+
     public VistaMenuAfiliado() {
-        initComponents();       
-      
+        initComponents();
+       
     }
 
-    
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -249,26 +252,26 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
     private void jBuscarAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarAfiliadoActionPerformed
        
         try{
-            int dni = Integer.parseInt(jDocumentoAfiliado.getText());
+            Integer dni = Integer.parseInt(jDocumentoAfiliado.getText());
             afiliadoActual = afiData.buscarAfiliado(dni);
             if(afiliadoActual != null){
-               jApellido.setText(afiliadoActual.getApellido());
+             
                jNombre.setText(afiliadoActual.getNombre());
+               jApellido.setText(afiliadoActual.getApellido());
                jTelefono.setText(String.valueOf(afiliadoActual.getTelefono()));
                jDomicilio.setText(afiliadoActual.getDomicilio());
-               jEstado.setSelected(afiliadoActual.isEstado()  );
-               
             }
+               
+          
        }catch(NumberFormatException nf){
-          JOptionPane.showMessageDialog(this, "Debe ingresar un documento vlido");
+           JOptionPane.showMessageDialog(this, "Debe ingresar un alido ");
        }
     }//GEN-LAST:event_jBuscarAfiliadoActionPerformed
 
-    
-   
     private void jAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgregarActionPerformed
-        
+        // TODO add your handling code here:
         try {
+            
             Integer dni = Integer.parseInt(jDocumentoAfiliado.getText());
             String apellido = jApellido.getText();
             String nombre = jNombre.getText();
@@ -279,25 +282,30 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Complete los campos vacios. Por Favor");
              return;           
             }
-            Boolean estado = jEstado.isSelected();
+             
+             Boolean estado = jEstado.isSelected();
             afiliadoActual=new Afiliados(nombre, apellido, dni, domicilio,telefono,estado);
             afiData.guardarAfiliado(afiliadoActual);
-           limpiarCampos();
-        } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this, "debe ingresar un DNI valido ");
+            limpiarCampos();
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this, "debe Ingresar un numero de dni ");
         }
-       
+            
+               
+            
+           
     }//GEN-LAST:event_jAgregarActionPerformed
 
     private void jModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModificarActionPerformed
         
         try {
             Integer dni = Integer.parseInt(jDocumentoAfiliado.getText());
-            
             String nombre = jNombre.getText();
             String apellido = jApellido.getText();                        
             Integer telefono = Integer.parseInt(jTelefono.getText());
             String domicilio = jDomicilio.getText();
+           
+            
             if (apellido.isEmpty() || nombre.isEmpty() || domicilio.isEmpty() || telefono==0 ){
                JOptionPane.showMessageDialog(this, " No pueden haber campos vacios");
               return;
@@ -326,9 +334,13 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
         } catch(NumberFormatException nf ){
             JOptionPane.showMessageDialog(this, "Debe ingresar un DNI correcto");
         }
+
+           
+         
     }//GEN-LAST:event_jModificarActionPerformed
 
-
+                
+                
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAgregar;
     private javax.swing.JTextField jApellido;
@@ -352,8 +364,7 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTelefono;
     // End of variables declaration//GEN-END:variables
 
-    
-    private void limpiarCampos(){
+  private void limpiarCampos(){
     
     jDocumentoAfiliado.setText("");  ;
     jApellido.setText("");
@@ -367,6 +378,5 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
     
     
     }
-
 
 }
