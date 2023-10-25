@@ -78,10 +78,10 @@ public class prestadorData {
     
     }
     
-    public Prestador buscarPrestadorDni(int dni){
+    public Prestador buscarPrestadorDniActivos(int dni){
         Prestador prestado=null;
         
-        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=1 OR estado = 0";
+        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=1";
         
         PreparedStatement ss=null;
         especialidadData esp = new especialidadData();
@@ -109,13 +109,57 @@ public class prestadorData {
                 //System.out.println(especialidad);
                 //System.out.println(prestado);
             }else{
-                JOptionPane.showMessageDialog(null,"No existe el prestador");
+                JOptionPane.showMessageDialog(null,"prestador no registrado");
                 ss.close();
             }
         } catch (SQLException xx){
             JOptionPane.showMessageDialog(null,"Error alacceder a la tabla prestador "+xx.getLocalizedMessage());
         }
         return prestado;
+    }
+    
+    public Prestador buscarPrestadorDniNoActivos(int dni){
+     Prestador prestado=null;
+        
+        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=0";
+        
+        PreparedStatement ss=null;
+        especialidadData esp = new especialidadData();
+        
+        try {
+            ss=con.prepareStatement(sql);
+            ss.setInt(1,dni);
+            ResultSet rs=ss.executeQuery();
+            System.out.println(rs);
+            if (rs.next()){
+                
+                prestado=new Prestador();
+                prestado.setNombre(rs.getString("nombre"));
+                prestado.setApellido(rs.getString("apellido"));
+                prestado.setDni(rs.getInt("dni"));
+                prestado.setDomicilio(rs.getString("domicilio"));
+                prestado.setTelefono(rs.getLong("telefono"));
+                prestado.setEstado(rs.getBoolean("estado"));
+//                System.out.println(prestado);
+                
+                int IdEspecialidad = rs.getInt("idEspecialidad");
+                Especialidad especialidad = esp.obtenerIdEspecialida(IdEspecialidad);
+                
+                prestado.setEspecialidad(especialidad);
+                //System.out.println(especialidad);
+                //System.out.println(prestado);
+            }else{
+                JOptionPane.showMessageDialog(null,"prestador no registrado");
+                ss.close();
+            }
+        } catch (SQLException xx){
+            JOptionPane.showMessageDialog(null,"Error alacceder a la tabla prestador "+xx.getLocalizedMessage());
+        }
+        return prestado;
+    
+    
+    
+    
     }
      
     public void modificarPrestador(Prestador prestador){

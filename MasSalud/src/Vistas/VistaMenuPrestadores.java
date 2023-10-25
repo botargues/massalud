@@ -290,8 +290,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
             agregarPrestador.setEstado(estado);
             agregarPrestador.setEspecialidad(es);
             prest.guardarPrestadores(agregarPrestador);
-        
-            System.out.println(agregarPrestador);
+            eliminardtos();
+            //System.out.println(agregarPrestador);
         
         }
             
@@ -310,16 +310,24 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
 
     private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
         // TODO add your handling code here
-        //1.Intentar actualizar los datos de jComboxs
+       
         try{
-            int documento = Integer.parseInt(jDocumento.getText());
-            Prestador pres = prest.buscarPrestadorDni(documento);
+            
+             String dniTexto = jDocumento.getText();
+   
+            if(dniTexto.length()!= 8){
+                JOptionPane.showMessageDialog(null, "el numero de Documento es invalido");
+                return;
+            }
+            
+            
+            int documento = Integer.parseInt(dniTexto);
+            Prestador pres = prest.buscarPrestadorDniActivos(documento);
             
             System.out.println(pres);
             
             if(pres != null){
-                
-        
+                 
                 
                 jNombre.setText(pres.getNombre());
                 jApellido.setText(pres.getApellido());
@@ -353,7 +361,47 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 jModificar.setEnabled(true);
                 jAgregar.setEnabled(false);
             }else{
-                eliminardtos();
+                int confirmacion = JOptionPane.showConfirmDialog( null, "El dni :"+ documento + " No Esta registrado o fue eliminado, Desea incorporarlo de nuevo o Agregar uno nuevo?",
+                        " ",
+                        JOptionPane.YES_NO_OPTION);
+                
+                if(confirmacion == JOptionPane.YES_OPTION){
+                
+                    Prestador presNoActivos = prest.buscarPrestadorDniNoActivos(documento);
+                    
+                    if(presNoActivos != null){
+                        jNombre.setText(presNoActivos.getNombre());
+                        jApellido.setText(presNoActivos.getApellido());
+                        jDocumento.setText(String.valueOf(presNoActivos.getDni()));
+                        jDomicilio.setText(presNoActivos.getDomicilio());
+                        jTelefono.setText(String.valueOf(presNoActivos.getTelefono()));
+                        jEstado.setSelected(presNoActivos.isEstado());
+                        
+                         if (presNoActivos.getEspecialidad() != null ) {
+                    Especialidad especial = presNoActivos.getEspecialidad();
+                    System.out.println(especial);
+                    
+                    for(int i = 0 ; i < jCombo.getItemCount(); i++){
+                        Especialidad especialidaCombo = jCombo.getItemAt(i);
+   
+                        if(especial.equals(especialidaCombo)){
+                            jCombo.setSelectedItem(i);
+                            System.out.println(i);
+                            break;
+                        }
+                    
+                    }
+                }
+                      jCombo.setSelectedItem(presNoActivos.getEspecialidad());  
+                      jModificar.setEnabled(true);
+                      jAgregar.setEnabled(false);
+                    }else{
+                        jAgregar.setEnabled(true);
+                    }
+                }else{
+                  eliminardtos();
+                }
+     
             }
             
         }catch(NullPointerException e){
@@ -392,11 +440,12 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         
         //Validacion de datos ingresados en nombre, apellido,domicilio
         if(!esString(nombre)){
-            throw new IllegalArgumentException("el bloque nombre es invalido, Revicelo por favor");
+            throw new IllegalArgumentException();
+            
         }else if(!esString(apellido)){
-            throw new IllegalArgumentException("el bloque apellido es invalido, Revicelo por favor");
+            throw new IllegalArgumentException();
         }else if(!esString(domicilio)){
-            throw new IllegalArgumentException("el bloque domicilio es invalido, Revicelo por favor");
+            throw new IllegalArgumentException();
         }
             
          Prestador modificarPrestador = new Prestador();
@@ -424,6 +473,8 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
         }catch(NullPointerException e){
         
             JOptionPane.showMessageDialog(null,"Hay datos vacios"+ e.getLocalizedMessage());
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(null,"se detecto un ingreso de numero en una de las casillas nombre, apellido y domicilio");
         }
     }//GEN-LAST:event_jModificarActionPerformed
 
@@ -434,7 +485,7 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 
                  int dni = Integer.parseInt(jDocumento.getText());
             
-            Prestador eliminarprestador = prest.buscarPrestadorDni(dni);
+            Prestador eliminarprestador = prest.buscarPrestadorDniActivos(dni);
             
             if(eliminarprestador != null){
                 
