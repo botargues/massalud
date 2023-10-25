@@ -65,7 +65,7 @@ public void guardarAfiliado( Afiliados afiliado){
     public void modificarAfiliado(Afiliados afiliado){
   
         String sql="UPDATE afiliados SET nombre=?, apellido=?, dni=?, domicilio=?, telefono=? "
-            + "WHERE idAAfiliados=?";
+            + "WHERE idAfiliados=?";
         try{ 
         PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, afiliado.getNombre());
