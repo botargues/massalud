@@ -214,4 +214,41 @@ public void guardarAfiliado( Afiliados afiliado){
      
      }
      
+     public Afiliados buscarAfiliadoPorId(int idAfiliados){
+        
+            
+            String sql="SELECT idAfiliados, nombre, apellido, dni, domicilio, telefono FROM afiliados WHERE idAfiliados=? AND estado=1";
+            Afiliados afiliado=null;
+           try {    
+            PreparedStatement ps=con.prepareStatement(sql);  
+            ps.setInt(1, idAfiliados);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){      
+            
+            afiliado=new Afiliados();          
+            
+            afiliado.setIdAfiliado(rs.getInt("idAfiliados")); 
+            afiliado.setNombre(rs.getString("nombre"));
+            afiliado.setApellido(rs.getString("apellido"));
+            afiliado.setDni(rs.getInt("dni"));   
+            afiliado.setDomicilio(rs.getString("domicilio"));
+            afiliado.setTelefono(rs.getLong("telefono"));
+            afiliado.setEstado(true);
+            
+            } else {
+             
+             JOptionPane.showMessageDialog(null, "No ningun afiliado con ese dni");   
+            
+            }
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Afiliados");
+        }
+        
+        return afiliado;         
+        
+        
+        }
+     
 }

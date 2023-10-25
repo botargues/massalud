@@ -99,7 +99,7 @@ public class Afiliados {
 
     @Override
     public String toString() {
-        return  "nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", domicilio=" + domicilio + ", telefono=" + telefono + ", estado=" + estado;
+        return  nombre + " " + apellido;
     }
     
     

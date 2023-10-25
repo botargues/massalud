@@ -13,12 +13,12 @@ import java.time.LocalDate;
 public class Orden {
     private int idOrden;
     private LocalDate fecha;
-    private int formaDepago;
+    private String formaDepago;
     private double importe;
     private Afiliados idAfiliado;
     private Prestador idPrestador;
 
-    public Orden(int idOrden, LocalDate fecha, int formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
+    public Orden(int idOrden, LocalDate fecha, String formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
         this.idOrden = idOrden;
         this.fecha = fecha;
         this.formaDepago = formaDepago;
@@ -27,7 +27,7 @@ public class Orden {
         this.idPrestador = idPrestador;
     }
 
-    public Orden(LocalDate fecha, int formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
+    public Orden(LocalDate fecha, String formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
         this.fecha = fecha;
         this.formaDepago = formaDepago;
         this.importe = importe;
@@ -54,11 +54,11 @@ public class Orden {
         this.fecha = fecha;
     }
 
-    public int getFormaDepago() {
+    public String getFormaDepago() {
         return formaDepago;
     }
 
-    public void setFormaDepago(int formaDepago) {
+    public void setFormaDepago(String formaDepago) {
         this.formaDepago = formaDepago;
     }
 
@@ -88,8 +88,8 @@ public class Orden {
 
     @Override
     public String toString() {
-        return "Orden{" + "fecha=" + fecha + ", formaDepago=" + formaDepago + ", importe=" + importe + ", idAfiliado=" + idAfiliado + ", idPrestador=" + idPrestador + '}';
+        return "{" + "" + fecha + '}';
     }
-    
+
     
 }

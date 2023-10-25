@@ -110,7 +110,7 @@ public class Prestador {
 
     @Override
     public String toString() {
-        return  "nombre=" + nombre + ", apellido=" + apellido ;
+        return nombre+" "+apellido;
     }
     
     
