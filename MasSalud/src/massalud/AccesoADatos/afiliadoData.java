@@ -64,8 +64,8 @@ public void guardarAfiliado( Afiliados afiliado){
     
     public void modificarAfiliado(Afiliados afiliado){
   
-        String sql="UPDATE afiliados SET nombre=?, apellido=?, dni=?, domicilio=?, telefono=? "
-            + "WHERE idAfiliados=?";
+        String sql="UPDATE afiliados SET nombre=?, apellido=?, dni=?, domicilio=?, telefono=?, estado=?"
+            + " WHERE dni=?";
         try{ 
         PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, afiliado.getNombre());
@@ -73,7 +73,8 @@ public void guardarAfiliado( Afiliados afiliado){
         ps.setInt(3, afiliado.getDni()); 
         ps.setString(4, afiliado.getDomicilio());
         ps.setLong(5, afiliado.getTelefono());
-        ps.setInt(6, afiliado.getIdAfiliado());
+        ps.setBoolean(6, afiliado.isEstado());
+        ps.setInt(7, afiliado.getIdAfiliado());
         
         int exito=ps.executeUpdate();
         

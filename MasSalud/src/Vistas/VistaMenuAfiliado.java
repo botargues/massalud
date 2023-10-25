@@ -252,7 +252,7 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
     private void jBuscarAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarAfiliadoActionPerformed
        
         try{
-            Integer dni = Integer.parseInt(jDocumentoAfiliado.getText());
+            int dni = Integer.parseInt(jDocumentoAfiliado.getText());
             afiliadoActual = afiData.buscarAfiliado(dni);
             if(afiliadoActual != null){
              
@@ -260,6 +260,7 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
                jApellido.setText(afiliadoActual.getApellido());
                jTelefono.setText(String.valueOf(afiliadoActual.getTelefono()));
                jDomicilio.setText(afiliadoActual.getDomicilio());
+               jEstado.setSelected(afiliadoActual.isEstado());
             }
                
           
