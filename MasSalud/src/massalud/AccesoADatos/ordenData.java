@@ -133,6 +133,7 @@ public class ordenData {
         return ord;
     }
     
+
     public List<Orden> obtenerOrdenes(LocalDate fecha){
         List<Orden> ord = new ArrayList<>();
         try {
@@ -158,37 +159,76 @@ public class ordenData {
         return ord;
     }
     
-    public List<Orden> obtenerOrdenesV2(LocalDate fecha){
     
-        ArrayList<Orden> orden = new ArrayList<>();
-        
-        String sql = "SELECT idOrden, fecha, formaDepago, importe FROM orden, "
-                + " WHERE idOrden = ?;";
-        
+    
+    
+    
+    
+        public ArrayList<Orden> ordenPorAfiliado(int idAfiliado){
+    
+              ArrayList<Orden> ordenSacada= new ArrayList<>(); 
+              
+              String sql="SELECT* FROM Orden WHERE idAfiliado=? ";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDate(2, Date.valueOf(fecha));
-            ResultSet rs = ps.executeQuery();
-            
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, idAfiliado);
+            ResultSet rs=ps.executeQuery();
             while(rs.next()){
-            
-                Orden mate = new Orden();
-                
-                mate.setIdOrden(rs.getInt("idOrden"));
-                mate.setFecha(rs.getDate("fecha").toLocalDate());
-                mate.setFormaDepago(rs.getString("formaDepago"));
-                mate.setImporte(rs.getDouble("importe"));
-                orden.add(mate);
-            
+             Orden ord=new Orden();
+             ord.setIdOrden(rs.getInt("idOrden"));
+             ord.setFecha(rs.getDate("fecha").toLocalDate());
+             ord.setFormaDepago(rs.getString("formaDepago"));
+             ord.setImporte(rs.getInt("importe"));
+             Afiliados afi=afiData.buscarAfiliado(rs.getInt("idAfiliado"));
+             Prestador pres=presData.buscarPrestadorPorId(rs.getInt("idPrestador"));
+             ord.setIdAfiliado(afi);
+             ord.setIdPrestador(pres);
+                          
+             ordenSacada.add(ord);
+             
             }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Orden: /n"+ ex);
-        }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(null, "Error: /n"+e.getMessage());
-        }
-        return orden;
+             
+           ps.close();
+            
+         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Orden");
+          }
+       return ordenSacada;  
+
+      }
+
+        
+             public ArrayList<Orden> ordenPorPrestador(int idPrestador){
     
-    }
+              ArrayList<Orden> ordenes= new ArrayList<>(); 
+              
+              String sql="SELECT* FROM Orden WHERE idPrestador=? ";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, idPrestador);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+             Orden ord=new Orden();
+             ord.setIdOrden(rs.getInt("idOrden"));
+             ord.setFecha(rs.getDate("fecha").toLocalDate());
+             ord.setFormaDepago(rs.getString("formaDepago"));
+             ord.setImporte(rs.getInt("importe"));
+             Afiliados afi=afiData.buscarAfiliado(rs.getInt("idAfiliado"));
+             Prestador pres=presData.buscarPrestadorPorId(rs.getInt("idPrestador"));
+             ord.setIdAfiliado(afi);
+             ord.setIdPrestador(pres);
+                          
+             ordenes.add(ord);
+             
+            }
+             
+           ps.close();
+            
+         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Orden");
+          }
+       return ordenes;  
+
+      }
     
 }
