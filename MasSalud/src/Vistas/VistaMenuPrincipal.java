@@ -28,7 +28,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenu3 = new javax.swing.JMenu();
         ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/images.jpg"));
         Image image = icon.getImage();
         jEscritorio = new javax.swing.JDesktopPane(){
@@ -39,14 +38,13 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         };
         jMenuBar1 = new javax.swing.JMenuBar();
         jAfiliados = new javax.swing.JMenu();
+        jOrdenes = new javax.swing.JMenu();
         jPrestadores = new javax.swing.JMenu();
         jListados = new javax.swing.JMenu();
         jLAfiliadosAct = new javax.swing.JMenuItem();
         jPrestadoresAct = new javax.swing.JMenuItem();
         jOrdenSegunFecha = new javax.swing.JMenuItem();
         jSalida = new javax.swing.JMenu();
-
-        jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,10 +82,28 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(jAfiliados);
 
+        jOrdenes.setText("Ordenes");
+        jOrdenes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jOrdenesMouseClicked(evt);
+            }
+        });
+        jOrdenes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jOrdenesActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jOrdenes);
+
         jPrestadores.setText("Prestadores");
         jPrestadores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPrestadoresMouseClicked(evt);
+            }
+        });
+        jPrestadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPrestadoresActionPerformed(evt);
             }
         });
         jPrestadores.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -112,7 +128,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         });
         jListados.add(jLAfiliadosAct);
 
-        jPrestadoresAct.setText("Listas de Prestadores");
+        jPrestadoresAct.setText("Listas por Especialidad");
         jPrestadoresAct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPrestadoresActActionPerformed(evt);
@@ -131,6 +147,11 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jListados);
 
         jSalida.setText("Salida");
+        jSalida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jSalidaMouseClicked(evt);
+            }
+        });
         jSalida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jSalidaActionPerformed(evt);
@@ -234,6 +255,29 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jEscritorio.moveToFront(list);
     }//GEN-LAST:event_jOrdenSegunFechaActionPerformed
 
+    private void jPrestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestadoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPrestadoresActionPerformed
+
+    private void jOrdenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOrdenesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jOrdenesActionPerformed
+
+    private void jOrdenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jOrdenesMouseClicked
+        // TODO add your handling code here:
+        jEscritorio.removeAll();
+        jEscritorio.repaint();
+        VistaOrden list = new VistaOrden();
+        list.setVisible(true);
+        jEscritorio.add(list);
+        jEscritorio.moveToFront(list);
+    }//GEN-LAST:event_jOrdenesMouseClicked
+
+    private void jSalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSalidaMouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jSalidaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -274,9 +318,9 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jEscritorio;
     private javax.swing.JMenuItem jLAfiliadosAct;
     private javax.swing.JMenu jListados;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jOrdenSegunFecha;
+    private javax.swing.JMenu jOrdenes;
     private javax.swing.JMenu jPrestadores;
     private javax.swing.JMenuItem jPrestadoresAct;
     private javax.swing.JMenu jSalida;
