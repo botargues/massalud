@@ -320,7 +320,7 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
                  afiData.guardarAfiliado(afiliadoActual);
                  limpiarCampos();
             }else {  
-            
+                afiliadoActual.getIdAfiliado();
                 afiliadoActual.setDni(dni);
                 afiliadoActual.setApellido(apellido);
                 afiliadoActual.setNombre(nombre);
