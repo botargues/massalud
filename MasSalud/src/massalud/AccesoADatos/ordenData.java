@@ -179,7 +179,7 @@ public class ordenData {
              ord.setFecha(rs.getDate("fecha").toLocalDate());
              ord.setFormaDepago(rs.getString("formaDepago"));
              ord.setImporte(rs.getInt("importe"));
-             Afiliados afi=afiData.buscarAfiliado(rs.getInt("idAfiliado"));
+             Afiliados afi=afiData.buscarAfiliadoPorId(rs.getInt("idAfiliado"));
              Prestador pres=presData.buscarPrestadorPorId(rs.getInt("idPrestador"));
              ord.setIdAfiliado(afi);
              ord.setIdPrestador(pres);
