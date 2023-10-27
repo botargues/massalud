@@ -143,7 +143,7 @@ public class VistaOrdenesPorPrestador extends javax.swing.JInternalFrame {
 private void armarCabecera(){
     
     ArrayList<Object> fila=new ArrayList<>();
-    fila.add("Prestador");
+    fila.add("Afiliado");
     fila.add("Fecha");
     fila.add("Forma de Pago");
     fila.add("Importe");
@@ -164,12 +164,11 @@ private void armarCabecera(){
         
         Prestador selec= (Prestador)jcPrestadores.getSelectedItem();
         modelo1.setRowCount(0);
-        
-       listaOrden = new ordenData().ordenPorPrestador(selec.getIdPrestador()); ;
+        listaOrden = new ordenData().ordenPorPrestador(selec.getIdPrestador()); ;
         
         if(!listaOrden.isEmpty()){
             for(Orden m: listaOrden){
-                modelo1.addRow(new Object[] {m.getIdAfiliado(),m.getFecha(),  m.getFormaDepago(), m.getImporte() });
+                modelo1.addRow(new Object[] {m.getIdAfiliado().getNombre(),m.getFecha(),  m.getFormaDepago(), m.getImporte() });
             }
         }else{
             JOptionPane.showMessageDialog(null, "No se encontro la orden.");
@@ -179,11 +178,11 @@ private void armarCabecera(){
 
    
     private void cargaDatosTabla(){
-        //borrarFilaTabla();
+       borrarFilaTabla();
        Prestador selec= (Prestador)jcPrestadores.getSelectedItem();
         listaOrden = (ArrayList<Orden>) ordenData.ordenPorPrestador(selec.getIdPrestador());
         for(Orden m: listaOrden){
-            modelo1.addRow(new Object[] {m.getFecha(), m.getFormaDepago(), m.getImporte(), m.getIdAfiliado(), m.getIdPrestador()});
+           modelo1.addRow(new Object[] {m.getIdAfiliado().getNombre(),m.getFecha(),  m.getFormaDepago(), m.getImporte() });
         }
     }
 

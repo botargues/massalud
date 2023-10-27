@@ -37,7 +37,7 @@ public class VistaOrdenesPorAfiliado extends javax.swing.JInternalFrame {
                        
         cargarAfiliados();
         armarCabecera();
-        //cargarOrdenesTabla();
+        cargarOrdenesTabla();
         
     }
 
@@ -180,7 +180,7 @@ private void cargarOrdenesTabla(){
     modelo1.setRowCount(0);
     listaOrden=ordenData.ordenPorAfiliado(selec.getIdAfiliado()) ;     
     for(Orden or:listaOrden){
-    modelo1.addRow(new Object[]{or.getIdPrestador(), or.getFecha(), or.getFormaDepago(), or.getImporte()});
+    modelo1.addRow(new Object[]{or.getIdPrestador().getNombre(), or.getFecha(), or.getFormaDepago(), or.getImporte()});
     }
       
  }  
@@ -194,7 +194,7 @@ private void cargarOrdenesTabla(){
         
         if(!listaOrden.isEmpty()){
             for(Orden m: listaOrden){
-                modelo1.addRow(new Object[] {m.getIdPrestador(),m.getFecha(),  m.getFormaDepago(), m.getImporte(), });
+                modelo1.addRow(new Object[] {m.getIdPrestador().getNombre(),m.getFecha(),  m.getFormaDepago(), m.getImporte(), });
             }
         }else{
             JOptionPane.showMessageDialog(null, "No se encontro la orden.");
