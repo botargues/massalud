@@ -1,4 +1,4 @@
-package Vistas;
+    package Vistas;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -150,7 +150,7 @@ public class VistaItemListaOrden extends javax.swing.JInternalFrame {
     private void cargaDatosTabla(){
         //borrarFilaTabla();
         Orden selec= (Orden)jComboBox2.getSelectedItem();
-        listaO = (ArrayList<Orden>) new ordenData().obtenerOrdenes(selec.getFecha());
+         = (ArrayList<Orden>) new ordenData().obtenerOrdenes(selec.getFecha());
         for(Orden m: listaO){
             modelo.addRow(new Object[] {m.getFecha(), m.getFormaDepago(), m.getImporte(), m.getIdAfiliado(), m.getIdPrestador()});
         }

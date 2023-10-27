@@ -44,6 +44,8 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jLAfiliadosAct = new javax.swing.JMenuItem();
         jPrestadoresAct = new javax.swing.JMenuItem();
         jOrdenSegunFecha = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jSalida = new javax.swing.JMenu();
 
         jMenu3.setText("jMenu3");
@@ -104,7 +106,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLAfiliadosAct.setText("Listas de Afiliados");
+        jLAfiliadosAct.setText("Listas de Afiliados y Prestadores");
         jLAfiliadosAct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jLAfiliadosActActionPerformed(evt);
@@ -127,6 +129,22 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
             }
         });
         jListados.add(jOrdenSegunFecha);
+
+        jMenuItem1.setText("Lista de Ordenes por Afiliado");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jListados.add(jMenuItem1);
+
+        jMenuItem2.setText("Lista de Ordenes por Prestador");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jListados.add(jMenuItem2);
 
         jMenuBar1.add(jListados);
 
@@ -199,20 +217,36 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     private void jListadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListadosMouseClicked
         // TODO add your handling code here:
-        
-    
+
     }//GEN-LAST:event_jListadosMouseClicked
 
-    private void jLAfiliadosActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLAfiliadosActActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        jEscritorio.removeAll();
+        jEscritorio.repaint();
+        VistaOrdenesPorPrestador vopp = new VistaOrdenesPorPrestador();
+        vopp.setVisible(true);
+        jEscritorio.add(vopp);
+        jEscritorio.moveToFront(vopp);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        jEscritorio.removeAll();
+        jEscritorio.repaint();
+        VistaOrdenesPorAfiliado vopa = new VistaOrdenesPorAfiliado();
+        vopa.setVisible(true);
+        jEscritorio.add(vopa);
+        jEscritorio.moveToFront(vopa);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jOrdenSegunFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOrdenSegunFechaActionPerformed
         // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
-        VistaMenuListados list=new VistaMenuListados();
+        VistaItemListaOrden list = new VistaItemListaOrden();
         list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
-        
-    }//GEN-LAST:event_jLAfiliadosActActionPerformed
+    }//GEN-LAST:event_jOrdenSegunFechaActionPerformed
 
     private void jPrestadoresActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestadoresActActionPerformed
         // TODO add your handling code here:
@@ -224,15 +258,16 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jEscritorio.moveToFront(list);
     }//GEN-LAST:event_jPrestadoresActActionPerformed
 
-    private void jOrdenSegunFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOrdenSegunFechaActionPerformed
+    private void jLAfiliadosActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLAfiliadosActActionPerformed
         // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
-        VistaItemListaOrden list = new VistaItemListaOrden();
+        VistaMenuListados list=new VistaMenuListados();
         list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
-    }//GEN-LAST:event_jOrdenSegunFechaActionPerformed
+
+    }//GEN-LAST:event_jLAfiliadosActActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,6 +311,8 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jListados;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jOrdenSegunFecha;
     private javax.swing.JMenu jPrestadores;
     private javax.swing.JMenuItem jPrestadoresAct;

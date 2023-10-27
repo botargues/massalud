@@ -73,7 +73,8 @@ public class Orden {
     public Afiliados getIdAfiliado() {
         return idAfiliado;
     }
-
+    
+  
     public void setIdAfiliado(Afiliados idAfiliado) {
         this.idAfiliado = idAfiliado;
     }
