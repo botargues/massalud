@@ -165,7 +165,7 @@ private void armarCabecera(){
         Prestador selec= (Prestador)jcPrestadores.getSelectedItem();
         modelo1.setRowCount(0);
         
-       listaOrden = ordenData.ordenPorPrestador(selec.getIdPrestador()); ;
+       listaOrden = new ordenData().ordenPorPrestador(selec.getIdPrestador()); ;
         
         if(!listaOrden.isEmpty()){
             for(Orden m: listaOrden){

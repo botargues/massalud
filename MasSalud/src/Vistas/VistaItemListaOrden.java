@@ -150,7 +150,7 @@ public class VistaItemListaOrden extends javax.swing.JInternalFrame {
     private void cargaDatosTabla(){
         //borrarFilaTabla();
         Orden selec= (Orden)jComboBox2.getSelectedItem();
-         = (ArrayList<Orden>) new ordenData().obtenerOrdenes(selec.getFecha());
+         listaO= (ArrayList<Orden>) new ordenData().obtenerOrdenes(selec.getFecha());
         for(Orden m: listaO){
             modelo.addRow(new Object[] {m.getFecha(), m.getFormaDepago(), m.getImporte(), m.getIdAfiliado(), m.getIdPrestador()});
         }
