@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import massalud.Entidades.Especialidad;
 import massalud.Entidades.Prestador;
 import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Ignacio Benavides
@@ -208,7 +209,6 @@ public class prestadorData {
     
     }
     
-    
     public ArrayList<Prestador> listarPrestador(){
         
             
@@ -244,19 +244,14 @@ public class prestadorData {
     
     public Prestador buscarPrestadorPorId(int idPrestador){
         Prestador prestado=null;
-        
         String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE idPrestador=? AND estado=1";
-        
         PreparedStatement ss=null;
         especialidadData esp = new especialidadData();
-        
         try {
             ss=con.prepareStatement(sql);
             ss.setInt(1,idPrestador);
             ResultSet rs=ss.executeQuery();
-            System.out.println(rs);
             if (rs.next()){
-                
                 prestado=new Prestador();
                 prestado.setNombre(rs.getString("nombre"));
                 prestado.setApellido(rs.getString("apellido"));
@@ -264,14 +259,10 @@ public class prestadorData {
                 prestado.setDomicilio(rs.getString("domicilio"));
                 prestado.setTelefono(rs.getLong("telefono"));
                 prestado.setEstado(rs.getBoolean("estado"));
-//                System.out.println(prestado);
-                
+                prestado.setIdPrestador(idPrestador);
                 int IdEspecialidad = rs.getInt("idEspecialidad");
                 Especialidad especialidad = esp.obtenerIdEspecialida(IdEspecialidad);
-                
                 prestado.setEspecialidad(especialidad);
-                //System.out.println(especialidad);
-                //System.out.println(prestado);
             }else{
                 ss.close();
             }
@@ -280,5 +271,23 @@ public class prestadorData {
         }
         return prestado;
     }
-
+    
+    public List<Especialidad> listarEspecialidad(){
+        List<Especialidad> especia = new ArrayList<>();
+        try {
+            String sql="SELECT * FROM especialidad";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()){
+                Especialidad especial =new Especialidad();
+                especial.setIdEspecialidad(rs.getInt("idEspecialidad"));
+                especial.setNomEspecialidad(rs.getString("especialidad"));
+                especia.add(especial);
+            }
+            ps.close();
+        }catch (SQLException exe){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Especialidades "+exe.getMessage());
+        }
+            return especia;
+        }
 }

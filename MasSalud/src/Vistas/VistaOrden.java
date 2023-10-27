@@ -11,9 +11,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import massalud.AccesoADatos.Conexion;
@@ -52,11 +55,11 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         eData = new especialidadData();
         listaE = (ArrayList<Especialidad>)eData.listarEspecialidades();
         modelo = new DefaultTableModel();
+        dia=LocalDate.now();
+        jFecha.setText(dia+"");
         cargaEspecialidad();
         obtenerEspecialista();
         armarCabeceraTabla();
-        dia=LocalDate.now();
-        jFecha.setText(dia+"");
     }
 
     /**
@@ -90,7 +93,6 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLimpiar = new javax.swing.JButton();
-        jConfirmar = new javax.swing.JButton();
         jComprarOrden = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -116,6 +118,7 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         });
 
         jEspeSelec.setBackground(new java.awt.Color(0, 0, 255));
+        jEspeSelec.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jEspeSelec.setForeground(new java.awt.Color(0, 51, 255));
         jEspeSelec.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -151,13 +154,27 @@ public class VistaOrden extends javax.swing.JInternalFrame {
 
         grupo.add(jEfectivo);
         jEfectivo.setText(" EFECTIVO");
+        jEfectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEfectivoActionPerformed(evt);
+            }
+        });
 
         grupo.add(jTransfe);
         jTransfe.setText(" TRANSFERENCIA");
+        jTransfe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTransfeActionPerformed(evt);
+            }
+        });
 
+        jDatosAfiliado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jDatosAfiliado.setForeground(new java.awt.Color(0, 51, 204));
+        jDatosAfiliado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jDatosAfiliado2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jDatosAfiliado2.setForeground(new java.awt.Color(0, 51, 204));
+        jDatosAfiliado2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,13 +201,6 @@ public class VistaOrden extends javax.swing.JInternalFrame {
             }
         });
 
-        jConfirmar.setText("Confirmar");
-        jConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jConfirmarActionPerformed(evt);
-            }
-        });
-
         jComprarOrden.setText("comprar orden");
         jComprarOrden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,67 +213,61 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jEfectivo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTransfe)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(jComprarOrden)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLimpiar)
+                                .addGap(44, 44, 44)
+                                .addComponent(jButton1))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDatosAfiliado2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jDatosAfiliado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jEspeSelec, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jDocumentoAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(63, 63, 63)
+                                                .addComponent(jBuscarAfiliado))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(jEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(227, 227, 227)
+                                        .addComponent(jLabel8)))
+                                .addGap(0, 80, Short.MAX_VALUE)))
+                        .addGap(25, 25, 25))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComprarOrden)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLimpiar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(78, 78, 78)
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jEfectivo)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTransfe)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jConfirmar)))
+                        .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jDocumentoAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBuscarAfiliado))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(115, 115, 115)
-                                .addComponent(jEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDatosAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(jEspeSelec, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDatosAfiliado2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(25, 25, 25))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,8 +305,7 @@ public class VistaOrden extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jEfectivo)
-                    .addComponent(jTransfe)
-                    .addComponent(jConfirmar))
+                    .addComponent(jTransfe))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLimpiar)
@@ -356,8 +359,7 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int filaSelecc = jTable1.getSelectedRow();
         int buscarPrestador = (int) (jTable1.getValueAt(filaSelecc,0));
-        Prestador pres = new Prestador();
-        pres =(pData.buscarPrestadorId(buscarPrestador));
+        Prestador pres =(pData.buscarPrestadorPorId(buscarPrestador));
         codPrestador = pres.getIdPrestador();
         mostrarPrestador(pres);
     }//GEN-LAST:event_jTable1MouseClicked
@@ -367,16 +369,11 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         limpiar();
     }//GEN-LAST:event_jLimpiarMouseClicked
 
-    private void jConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConfirmarActionPerformed
-        // TODO add your handling code here:
-        selecPago();
-    }//GEN-LAST:event_jConfirmarActionPerformed
-
     private void jComprarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComprarOrdenActionPerformed
         // TODO add your handling code here:
         String sql = "INSERT INTO orden (fecha,formaDepago,importe,idAfiliado,idPrestador) VALUES (?, ?, ?, ?, ?)";
         try {   
-            PreparedStatement ps= con.prepareStatement(sql);
+            PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setDate(1,Date.valueOf(dia));  
             ps.setInt(2, formaDepago);
             ps.setDouble(3, importe);
@@ -390,8 +387,20 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Ordenes"+ex.getLocalizedMessage());
         }
-        
+        limpiar();
     }//GEN-LAST:event_jComprarOrdenActionPerformed
+
+    private void jEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEfectivoActionPerformed
+        // TODO add your handling code here:
+        formaDepago = 1;
+        importe= Integer.parseInt(jImporte.getText());
+    }//GEN-LAST:event_jEfectivoActionPerformed
+
+    private void jTransfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTransfeActionPerformed
+        // TODO add your handling code here:
+        formaDepago = 2;
+        importe= Integer.parseInt(jImporte.getText());
+    }//GEN-LAST:event_jTransfeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -399,7 +408,6 @@ public class VistaOrden extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBuscarAfiliado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jComprarOrden;
-    private javax.swing.JButton jConfirmar;
     private javax.swing.JLabel jDatosAfiliado;
     private javax.swing.JLabel jDatosAfiliado2;
     private javax.swing.JTextField jDocumentoAfiliado;
@@ -424,7 +432,6 @@ public class VistaOrden extends javax.swing.JInternalFrame {
     private void cargaEspecialidad() {
         Especialidad e = new Especialidad(0," ");
         jEspecialidad.addItem(e);
-     
         for(Especialidad espe : listaE){
             jEspecialidad.addItem(espe);
         }
@@ -459,11 +466,12 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         jEspeSelec.setText("");
         jImporte.setText("");
         jEfectivo.getModel();
+        grupo.clearSelection();
         int indice= modelo.getRowCount()-1;
         for(int i=indice;i>=0; i--){
             modelo.removeRow(i);
         }
-        
+        cargaEspecialidad();
     }
     
     private void armarCabeceraTabla() {
@@ -478,19 +486,10 @@ public class VistaOrden extends javax.swing.JInternalFrame {
     }
 
     private void mostrarPrestador(Prestador pres){
-        jEspeSelec.setText(pres.toString());
+        jEspeSelec.setText(pres.getApellido()+" "+pres.getNombre()+" Domicilio "+pres.getDomicilio()+" Tel:"+pres.getTelefono());
         
     }
 
-    private void selecPago(){
-        if (jEfectivo.isSelected()){
-            formaDepago = 1;
-        }else if (jTransfe.isSelected()){
-            formaDepago = 2;
-        }
-        System.out.println(formaDepago);
-    }
-    
 }
     
     

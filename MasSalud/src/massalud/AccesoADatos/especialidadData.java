@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import massalud.Entidades.Especialidad;
+import massalud.Entidades.Prestador;
 
 /**
  *
@@ -53,37 +54,47 @@ public class especialidadData {
     
     
     public Especialidad obtenerIdEspecialida(int idEspecialidad){
-     
-         String sql = "SELECT idEspecialidad, Especialidad FROM especialidad WHERE idEspecialidad = ? ";
+        String sql = "SELECT idEspecialidad, Especialidad FROM especialidad WHERE idEspecialidad = ? ";
         Especialidad idEsp = null;
-        
         try{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idEspecialidad);
-            
             ResultSet rs = ps.executeQuery();
-            
             if (rs.next()) {
-                
-                
-                
                 idEsp = new Especialidad();
-                
                 idEsp.setIdEspecialidad(rs.getInt("idEspecialidad"));
                 idEsp.setNomEspecialidad(rs.getString("Especialidad"));
-                
             }
-            
         }catch(SQLException e){
              JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Especialidades");
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "error: "+e.getLocalizedMessage());
         }
         return idEsp;
-     
      }
     
-    
-    
-    
+    public List<Prestador> obtenerEspecialista(int idEspecialidad){
+        ArrayList <Prestador> prestadEspecialidad = new ArrayList<>();
+        String sql = "SELECT p.idPrestador,apellido,nombre,domicilio,telefono "
+                + "FROM especialidad e,prestador p WHERE e.idEspecialidad = p.idEspecialidad And p.idEspecialidad=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idEspecialidad);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Prestador pre = new Prestador();
+                pre.setIdPrestador(rs.getInt("idPrestador"));
+                pre.setApellido(rs.getString("apellido"));
+                pre.setNombre(rs.getString("nombre"));
+                pre.setDomicilio(rs.getString("domicilio"));
+                pre.setTelefono(rs.getLong("telefono"));
+                prestadEspecialidad.add(pre);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla prestadores "+ ex);
+        }
+        return prestadEspecialidad;
+    }
+
 }
