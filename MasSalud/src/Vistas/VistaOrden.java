@@ -44,7 +44,7 @@ public class VistaOrden extends javax.swing.JInternalFrame {
     int codAfiliado;
     int codPrestador;
     LocalDate dia;
-    int formaDepago;
+    String formaDepago;
     double importe;
     
     public VistaOrden() {
@@ -371,11 +371,15 @@ public class VistaOrden extends javax.swing.JInternalFrame {
 
     private void jComprarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComprarOrdenActionPerformed
         // TODO add your handling code here:
-        String sql = "INSERT INTO orden (fecha,formaDepago,importe,idAfiliado,idPrestador) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO orden (fecha, formaDepago, importe, idAfiliado, idPrestador) " +
+             "SELECT ?, ?, ?, a.idAfiliados, p.idPrestador " +
+             "FROM afiliados a " +
+             "JOIN prestador p ON a.idAfiliados = ? AND p.idPrestador = ?";
+
         try {   
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setDate(1,Date.valueOf(dia));  
-            ps.setInt(2, formaDepago);
+            ps.setString(2, formaDepago);
             ps.setDouble(3, importe);
             ps.setInt(4, codAfiliado);
             ps.setInt(5, codPrestador);
@@ -392,13 +396,13 @@ public class VistaOrden extends javax.swing.JInternalFrame {
 
     private void jEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEfectivoActionPerformed
         // TODO add your handling code here:
-        formaDepago = 1;
+        formaDepago = "efectivo";
         importe= Integer.parseInt(jImporte.getText());
     }//GEN-LAST:event_jEfectivoActionPerformed
 
     private void jTransfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTransfeActionPerformed
         // TODO add your handling code here:
-        formaDepago = 2;
+        formaDepago = "Tranferencia";
         importe= Integer.parseInt(jImporte.getText());
     }//GEN-LAST:event_jTransfeActionPerformed
 
