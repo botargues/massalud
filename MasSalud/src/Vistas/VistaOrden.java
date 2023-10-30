@@ -5,6 +5,7 @@
  */
 package Vistas;
 
+import static Vistas.VistaMenuPrincipal.jEscritorio;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import massalud.AccesoADatos.Conexion;
 import massalud.AccesoADatos.afiliadoData;
 import massalud.AccesoADatos.especialidadData;
+import massalud.AccesoADatos.ordenData;
 import massalud.AccesoADatos.prestadorData;
 import massalud.Entidades.Afiliados;
 import massalud.Entidades.Especialidad;
@@ -39,7 +41,8 @@ public class VistaOrden extends javax.swing.JInternalFrame {
     private ArrayList<Especialidad> listaE;
     private List<Prestador> listaP;
     private especialidadData eData;
-    private Orden orden=new Orden();
+    private Orden ord;
+    private ordenData oData;
     private DefaultTableModel modelo;
     int codAfiliado;
     int codPrestador;
@@ -52,6 +55,7 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         con = Conexion.getConexion();
         pData = new prestadorData();
         afiData = new afiliadoData();
+        oData = new ordenData();
         eData = new especialidadData();
         listaE = (ArrayList<Especialidad>)eData.listarEspecialidades();
         modelo = new DefaultTableModel();
@@ -322,16 +326,27 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         try{
             int dni = Integer.parseInt(jDocumentoAfiliado.getText());
             Afiliados afil = afiData.buscarAfiliado(dni);
-            codAfiliado = afil.getIdAfiliado();
-            if(afil != null){
-                jDatosAfiliado.setText(afil.getApellido()+" "+afil.getNombre()+"- DNI "+ afil.getDni()+"-  Estado "+afil.isEstado());
-                jDatosAfiliado2.setText("Domicilio "+afil.getDomicilio()+"- Telefono  "+afil.getTelefono());
+            if(afil == null){
+                int confirmacion = JOptionPane.showConfirmDialog( null, "¿Quiere ingresar un nuevo afiliado?",
+                        " ",JOptionPane.YES_NO_OPTION);
+                    if(confirmacion == JOptionPane.YES_OPTION){
+                        jEscritorio.removeAll();
+                        jEscritorio.repaint();
+                        VistaAgregarAfiliado afi=new VistaAgregarAfiliado();
+                        jEscritorio.add(afi);
+                        afi.toFront();
+                        afi.setVisible(true);
+                    }else{
+                        return;
+                }
             }else{
-               JOptionPane.showMessageDialog(null, "Para ingresar afiliado complete los campos y oprima Agregar");
+               jDatosAfiliado.setText(afil.getApellido()+" "+afil.getNombre()+"- DNI "+ afil.getDni());
+               jDatosAfiliado2.setText("Domicilio "+afil.getDomicilio()+"- Telefono  "+afil.getTelefono());
+                codAfiliado = afil.getIdAfiliado();
             }
-       }catch(NumberFormatException e){
-           JOptionPane.showMessageDialog(null, "DNI no encontrado");
-       }
+        }catch(NumberFormatException e){
+           
+        }
     }//GEN-LAST:event_jBuscarAfiliadoActionPerformed
 
     private void jEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEspecialidadActionPerformed
@@ -360,8 +375,14 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         int filaSelecc = jTable1.getSelectedRow();
         int buscarPrestador = (int) (jTable1.getValueAt(filaSelecc,0));
         Prestador pres =(pData.buscarPrestadorPorId(buscarPrestador));
-        codPrestador = pres.getIdPrestador();
-        mostrarPrestador(pres);
+        if (pres!=null){
+            codPrestador = pres.getIdPrestador();
+            mostrarPrestador(pres);
+        }else{
+            JOptionPane.showMessageDialog(null,"Prestador inactivo");
+            return;
+        }
+        
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLimpiarMouseClicked
@@ -371,11 +392,12 @@ public class VistaOrden extends javax.swing.JInternalFrame {
 
     private void jComprarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComprarOrdenActionPerformed
         // TODO add your handling code here:
+        verificarFecha(dia,codPrestador);
+        dispose();
         String sql = "INSERT INTO orden (fecha, formaDepago, importe, idAfiliado, idPrestador) " +
              "SELECT ?, ?, ?, a.idAfiliados, p.idPrestador " +
              "FROM afiliados a " +
              "JOIN prestador p ON a.idAfiliados = ? AND p.idPrestador = ?";
-
         try {   
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setDate(1,Date.valueOf(dia));  
@@ -386,7 +408,7 @@ public class VistaOrden extends javax.swing.JInternalFrame {
             ps.executeUpdate();
             ResultSet rs=ps.getGeneratedKeys();   
             if(rs.next()){                         
-                JOptionPane.showMessageDialog(null,"Se ha agregado una orden");
+                JOptionPane.showMessageDialog(null,"Orden registrada");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Ordenes"+ex.getLocalizedMessage());
@@ -491,9 +513,26 @@ public class VistaOrden extends javax.swing.JInternalFrame {
 
     private void mostrarPrestador(Prestador pres){
         jEspeSelec.setText(pres.getApellido()+" "+pres.getNombre()+" Domicilio "+pres.getDomicilio()+" Tel:"+pres.getTelefono());
-        
     }
 
+    private void verificarFecha(LocalDate fecha, int idPrestador){
+        String sql="SELECT fecha, idPrestador FROM orden WHERE fecha=? AND idPrestador=?";
+        PreparedStatement ss=null;
+        try {
+            ss=con.prepareStatement(sql);
+            ss.setDate(1, Date.valueOf(fecha));
+            ss.setInt(2, idPrestador);
+            ResultSet rs=ss.executeQuery();
+            if (rs.next()){
+                JOptionPane.showMessageDialog(null,"No se puede emitir orden porque ya fue emitida en este dia para este prestador");
+                return;
+            }else{
+                ss.close();
+            }
+        } catch (SQLException xx){
+            JOptionPane.showMessageDialog(null,"Error alacceder a la tabla Orden "+xx.getMessage());
+        }
+    }
 }
     
     
