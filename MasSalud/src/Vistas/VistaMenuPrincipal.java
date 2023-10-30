@@ -350,7 +350,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jAfiliados;
-    private javax.swing.JDesktopPane jEscritorio;
+    public static javax.swing.JDesktopPane jEscritorio;
     private javax.swing.JMenuItem jLAfiliadosAct;
     private javax.swing.JMenu jListados;
     private javax.swing.JMenuBar jMenuBar1;

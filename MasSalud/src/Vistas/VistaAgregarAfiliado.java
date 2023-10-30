@@ -5,7 +5,7 @@
  */
 package Vistas;
 
-import static Vistas.VistaMenuPrincipal.jEscritorio;
+
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import massalud.AccesoADatos.Conexion;
@@ -198,12 +198,10 @@ public class VistaAgregarAfiliado extends javax.swing.JInternalFrame {
         }catch(NumberFormatException nfe){
             JOptionPane.showMessageDialog(this, "debe Ingresar un numero de dni ");
         }
-        jEscritorio.removeAll();
-        jEscritorio.repaint();
+      //
         VistaOrden list = new VistaOrden();
         list.setVisible(true);
-        jEscritorio.add(list);
-        jEscritorio.moveToFront(list);
+        
     }//GEN-LAST:event_jGuardarActionPerformed
 
 

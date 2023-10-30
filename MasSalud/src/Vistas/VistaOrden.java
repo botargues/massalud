@@ -6,18 +6,19 @@
 package Vistas;
 
 import static Vistas.VistaMenuPrincipal.jEscritorio;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import massalud.AccesoADatos.Conexion;
@@ -330,15 +331,11 @@ public class VistaOrden extends javax.swing.JInternalFrame {
                 int confirmacion = JOptionPane.showConfirmDialog( null, "¿Quiere ingresar un nuevo afiliado?",
                         " ",JOptionPane.YES_NO_OPTION);
                     if(confirmacion == JOptionPane.YES_OPTION){
-                        jEscritorio.removeAll();
-                        jEscritorio.repaint();
-                        VistaAgregarAfiliado afi=new VistaAgregarAfiliado();
-                        jEscritorio.add(afi);
-                        afi.toFront();
-                        afi.setVisible(true);
-                    }else{
-                        return;
-                }
+                        VistaAgregarAfiliado Agregar = new VistaAgregarAfiliado();
+                        VistaMenuPrincipal.jEscritorio.add(Agregar);
+                        Agregar.toFront();
+                        Agregar.setVisible(true);
+                    }
             }else{
                jDatosAfiliado.setText(afil.getApellido()+" "+afil.getNombre()+"- DNI "+ afil.getDni());
                jDatosAfiliado2.setText("Domicilio "+afil.getDomicilio()+"- Telefono  "+afil.getTelefono());
