@@ -164,12 +164,9 @@ public class prestadorData {
     }
      
     public void modificarPrestador(Prestador prestador){
-    
         String sql = "UPDATE prestador SET nombre = ?, apellido = ?, dni = ?, domicilio = ?, telefono = ?, estado = ?, idEspecialidad = ? WHERE dni = ?";
-    
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            
             ps.setString(1, prestador.getNombre());
             ps.setString(2, prestador.getApellido());
             ps.setInt(3, prestador.getDni());
@@ -179,12 +176,9 @@ public class prestadorData {
             ps.setInt(7, prestador.getEspecialidad().getIdEspecialidad());
             ps.setInt(8, prestador.getDni());
             int exito = ps.executeUpdate();
-            
             if(exito==1){
-                
                 JOptionPane.showMessageDialog(null,"Prestador Modificado Exitosamente");
             }
-            
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "Error al acceder a la tabla prestador"+ ex);
         }

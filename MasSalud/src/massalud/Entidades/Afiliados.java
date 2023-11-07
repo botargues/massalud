@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package massalud.Entidades;
 
-/**
- *
- * @author JuanBenavides
- */
 public class Afiliados {
     private int idAfiliado;
     private String nombre;
@@ -27,7 +19,6 @@ public class Afiliados {
         this.estado = estado;
     }
     
-
     public Afiliados(String nombre, String apellido, int dni, String domicilio, long telefono, boolean estado) {
         this.nombre = nombre;
         this.apellido = apellido;

@@ -239,29 +239,15 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTelefonoActionPerformed
 
     private void jAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgregarActionPerformed
-        // TODO add your handling code here:
         try{
             String dniTexto = jDocumento.getText();
             String telefonoTexto = jTelefono.getText();
-            
-            //validacion de cantidad de caracteres en documento y telefono celular
-            if(telefonoTexto.length() != 10){
-                JOptionPane.showMessageDialog(null, "el numero de telefono es muy corto o paso los limites de 10 digitos");
-                return;
-            }
-            
-            if(dniTexto.length()!= 8){
-                JOptionPane.showMessageDialog(null, "el numero de Documento es invalido");
-                return;
-            }
-            
             int dni = Integer.parseInt(dniTexto);
             String nombre = jNombre.getText();
             String apellido = jApellido.getText();
             String domicilio = jDomicilio.getText();
             long telefono = Long.parseLong(telefonoTexto);
             boolean estado =  jEstado.isSelected();
-        
             Especialidad es = (Especialidad)jCombo.getSelectedItem();
         
         //Validacion de datos ingresados en nombre, apellido,domicilio
@@ -413,12 +399,9 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBuscarActionPerformed
 
     private void jModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModificarActionPerformed
-        // TODO add your handling code here:
         try{
-        
             String dniTexto = jDocumento.getText();
             String telTexto = jTelefono.getText();
-            
             if(dniTexto.length() != 8){
                 JOptionPane.showMessageDialog(null, "el numero de Documento es invalido");
                 return;
@@ -427,51 +410,33 @@ public class VistaMenuPrestadores extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "el numero de telefono es muy corto o paso los limites de 10 digitos");
                 return;
             }
-            
             int dni = Integer.parseInt(dniTexto);
             String nombre = jNombre.getText();
             String apellido = jApellido.getText();
             String domicilio = jDomicilio.getText();
             long telefono = Long.parseLong(telTexto);
             boolean estado =  jEstado.isSelected();
-          
-        
             Especialidad es = (Especialidad)jCombo.getSelectedItem();
-        
         //Validacion de datos ingresados en nombre, apellido,domicilio
-        if(!esString(nombre)){
-            throw new IllegalArgumentException();
-            
-        }else if(!esString(apellido)){
-            throw new IllegalArgumentException();
-        }else if(!esString(domicilio)){
-            throw new IllegalArgumentException();
-        }
-            
-         Prestador modificarPrestador = new Prestador();
-         
-         modificarPrestador.setDni(dni);
-         modificarPrestador.setNombre(nombre);
-         modificarPrestador.setApellido(apellido);
-         modificarPrestador.setDomicilio(domicilio);
-         modificarPrestador.setTelefono(telefono);
-         
-      
-         modificarPrestador.setEstado(estado);
- 
-         
-         modificarPrestador.setEspecialidad(es);
-         
-         prest.modificarPrestador(modificarPrestador);
-         
-        
-         eliminardtos();
+            if(!esString(nombre)){
+                throw new IllegalArgumentException();
+            }else if(!esString(apellido)){
+                throw new IllegalArgumentException();
+            }else if(!esString(domicilio)){
+                throw new IllegalArgumentException();
+            }
+        Prestador modificarPrestador = new Prestador();
+        modificarPrestador.setNombre(nombre);
+        modificarPrestador.setApellido(apellido);
+        modificarPrestador.setDomicilio(domicilio);
+        modificarPrestador.setTelefono(telefono);
+        modificarPrestador.setEstado(estado);
+        modificarPrestador.setEspecialidad(es);
+        prest.modificarPrestador(modificarPrestador);
+        eliminardtos();
         }catch(NumberFormatException e){
-        
-        JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-        
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }catch(NullPointerException e){
-        
             JOptionPane.showMessageDialog(null,"Hay datos vacios"+ e.getLocalizedMessage());
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(null,"se detecto un ingreso de numero en una de las casillas nombre, apellido y domicilio");

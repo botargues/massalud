@@ -1,28 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vistas;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author sergi
- */
 public class VistaMenuPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VistaMenuPrincipal
-     */
     public VistaMenuPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -194,7 +181,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalidaActionPerformed
-        // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jSalidaActionPerformed
 
@@ -211,14 +197,12 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jAfiliadosComponentRemoved
 
     private void jAfiliadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAfiliadosMouseClicked
-        // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaMenuAfiliado afil=new VistaMenuAfiliado();
         afil.setVisible(true);
         jEscritorio.add(afil);
         jEscritorio.moveToFront(afil);
-    
     }//GEN-LAST:event_jAfiliadosMouseClicked
 
     private void jPrestadoresKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPrestadoresKeyPressed
@@ -226,19 +210,16 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jPrestadoresKeyPressed
 
     private void jPrestadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrestadoresMouseClicked
-        // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaMenuPrestadores pres=new VistaMenuPrestadores();
         pres.setVisible(true);
         jEscritorio.add(pres);
         jEscritorio.moveToFront(pres);
-    
     }//GEN-LAST:event_jPrestadoresMouseClicked
 
     private void jListadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListadosMouseClicked
         // TODO add your handling code here:
-
     }//GEN-LAST:event_jListadosMouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -260,7 +241,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jOrdenSegunFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOrdenSegunFechaActionPerformed
-        // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaItemListaOrden list = new VistaItemListaOrden();
@@ -270,7 +250,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jOrdenSegunFechaActionPerformed
 
     private void jPrestadoresActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestadoresActActionPerformed
-        // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaItemListaPrestadores list = new VistaItemListaPrestadores();
@@ -280,14 +259,18 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jPrestadoresActActionPerformed
 
     private void jLAfiliadosActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLAfiliadosActActionPerformed
-        // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaMenuListados list=new VistaMenuListados();
         list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
-
+        /*jEscritorio.removeAll();
+        jEscritorio.repaint();
+        VistaAgregarAfiliado afi=new VistaAgregarAfiliado();
+        jEscritorio.add(afi);
+        afi.toFront();
+        afi.setVisible(true);*/
     }//GEN-LAST:event_jLAfiliadosActActionPerformed
 
     private void jPrestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestadoresActionPerformed
@@ -299,7 +282,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jOrdenesActionPerformed
 
     private void jOrdenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jOrdenesMouseClicked
-        // TODO add your handling code here:
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaOrden list = new VistaOrden();
@@ -309,13 +291,9 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jOrdenesMouseClicked
 
     private void jSalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSalidaMouseClicked
-        // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jSalidaMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
