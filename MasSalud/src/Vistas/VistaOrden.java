@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 //import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -338,7 +338,7 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         try{
             dni = Integer.parseInt(jDocumentoAfiliado.getText());
             Afiliados afil = afiData.buscarAfiliado(dni);
-            if (afil.isEstado()==true){
+                //
                 if(afil == null){
                     int confirmacion = JOptionPane.showConfirmDialog( null, "¿Quiere ingresar un nuevo afiliado?",
                             " ",JOptionPane.YES_NO_OPTION);
@@ -350,14 +350,13 @@ public class VistaOrden extends javax.swing.JInternalFrame {
                     }else{
                         jDocumentoAfiliado.getText();
                     }
-                }else{
+                }else if (afil.isEstado()==true){
                     jDatosAfiliado.setText("  "+afil.getApellido()+" "+afil.getNombre()+"- DNI "+ afil.getDni());
                     jDatosAfiliado2.setText("  Domicilio "+afil.getDomicilio()+"- Telefono  "+afil.getTelefono());
                     codAfiliado = afil.getIdAfiliado();
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "Afiliado INACTIVO");
-            }
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Afiliado INACTIVO");
+                    }
         }catch(NumberFormatException e){
         }
     }//GEN-LAST:event_jBuscarAfiliadoActionPerformed

@@ -200,9 +200,10 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaMenuAfiliado afil=new VistaMenuAfiliado();
-        afil.setVisible(true);
         jEscritorio.add(afil);
         jEscritorio.moveToFront(afil);
+        
+        afil.setVisible(true);
     }//GEN-LAST:event_jAfiliadosMouseClicked
 
     private void jPrestadoresKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPrestadoresKeyPressed
@@ -213,9 +214,9 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaMenuPrestadores pres=new VistaMenuPrestadores();
-        pres.setVisible(true);
         jEscritorio.add(pres);
         jEscritorio.moveToFront(pres);
+        pres.setVisible(true);
     }//GEN-LAST:event_jPrestadoresMouseClicked
 
     private void jListadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListadosMouseClicked
@@ -226,51 +227,45 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaOrdenesPorPrestador vopp = new VistaOrdenesPorPrestador();
-        vopp.setVisible(true);
         jEscritorio.add(vopp);
         jEscritorio.moveToFront(vopp);
+        vopp.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaOrdenesPorAfiliado vopa = new VistaOrdenesPorAfiliado();
-        vopa.setVisible(true);
         jEscritorio.add(vopa);
         jEscritorio.moveToFront(vopa);
+        vopa.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jOrdenSegunFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jOrdenSegunFechaActionPerformed
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaItemListaOrden list = new VistaItemListaOrden();
-        list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
+        list.setVisible(true);
     }//GEN-LAST:event_jOrdenSegunFechaActionPerformed
 
     private void jPrestadoresActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestadoresActActionPerformed
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaItemListaPrestadores list = new VistaItemListaPrestadores();
-        list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
+        list.setVisible(true);
     }//GEN-LAST:event_jPrestadoresActActionPerformed
 
     private void jLAfiliadosActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLAfiliadosActActionPerformed
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaMenuListados list=new VistaMenuListados();
-        list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
-        /*jEscritorio.removeAll();
-        jEscritorio.repaint();
-        VistaAgregarAfiliado afi=new VistaAgregarAfiliado();
-        jEscritorio.add(afi);
-        afi.toFront();
-        afi.setVisible(true);*/
+        list.setVisible(true);
     }//GEN-LAST:event_jLAfiliadosActActionPerformed
 
     private void jPrestadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPrestadoresActionPerformed
@@ -285,9 +280,10 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jEscritorio.removeAll();
         jEscritorio.repaint();
         VistaOrden list = new VistaOrden();
-        list.setVisible(true);
         jEscritorio.add(list);
         jEscritorio.moveToFront(list);
+        list.setVisible(true);
+    
     }//GEN-LAST:event_jOrdenesMouseClicked
 
     private void jSalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSalidaMouseClicked
