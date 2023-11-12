@@ -6,10 +6,10 @@ public class Afiliados {
     private String apellido;
     private int dni;
     private String domicilio;
-    private long telefono;
+    private String telefono;
     private boolean estado;
 
-    public Afiliados(int idAfiliado, String nombre, String apellido, int dni, String domicilio, long telefono, boolean estado) {
+    public Afiliados(int idAfiliado, String nombre, String apellido, int dni, String domicilio, String telefono, boolean estado) {
         this.idAfiliado = idAfiliado;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -19,7 +19,7 @@ public class Afiliados {
         this.estado = estado;
     }
     
-    public Afiliados(String nombre, String apellido, int dni, String domicilio, long telefono, boolean estado) {
+    public Afiliados(String nombre, String apellido, int dni, String domicilio,String telefono, boolean estado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -72,11 +72,11 @@ public class Afiliados {
         this.domicilio = domicilio;
     }
 
-    public long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

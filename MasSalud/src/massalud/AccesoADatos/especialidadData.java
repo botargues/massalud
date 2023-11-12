@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package massalud.AccesoADatos;
 
 import java.sql.Connection;
@@ -14,10 +10,6 @@ import javax.swing.JOptionPane;
 import massalud.Entidades.Especialidad;
 import massalud.Entidades.Prestador;
 
-/**
- *
- * @author Usuario
- */
 public class especialidadData {
     
     private Connection con =null;
@@ -27,28 +19,20 @@ public class especialidadData {
     }
     
     public List<Especialidad> listarEspecialidades(){
-    
         List<Especialidad> nombrarEspecialidad = new ArrayList<>();
-        
         try {
             String sql="SELECT * FROM especialidad ";
             PreparedStatement ps = con.prepareStatement(sql);
-            
             ResultSet rs = ps.executeQuery();
-            
             while(rs.next()){
-            
                 Especialidad esp = new Especialidad();
-                
                 esp.setIdEspecialidad(rs.getInt("idEspecialidad"));
                 esp.setNomEspecialidad(rs.getString("Especialidad"));
                 nombrarEspecialidad.add(esp);
-            
             }
         } catch (SQLException e) {
               JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Especialidad"+e.getMessage());
         }
-    
         return nombrarEspecialidad;
     }
     
@@ -75,8 +59,8 @@ public class especialidadData {
     
     public List<Prestador> obtenerEspecialista(int idEspecialidad){
         ArrayList <Prestador> prestadEspecialidad = new ArrayList<>();
-        String sql = "SELECT p.idPrestador,apellido,nombre,domicilio,telefono "
-                + "FROM especialidad e,prestador p WHERE e.idEspecialidad = p.idEspecialidad And p.idEspecialidad=?";
+        String sql = "SELECT p.idPrestador,apellido,nombre,domicilio,telefono,estado "
+                + "FROM especialidad e,prestador p WHERE e.idEspecialidad = p.idEspecialidad And p.idEspecialidad=? AND p.estado=1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idEspecialidad);
@@ -88,6 +72,7 @@ public class especialidadData {
                 pre.setNombre(rs.getString("nombre"));
                 pre.setDomicilio(rs.getString("domicilio"));
                 pre.setTelefono(rs.getLong("telefono"));
+                pre.setEstado(rs.getBoolean("estado"));
                 prestadEspecialidad.add(pre);
             }
             ps.close();
@@ -96,5 +81,4 @@ public class especialidadData {
         }
         return prestadEspecialidad;
     }
-
 }

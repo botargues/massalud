@@ -197,10 +197,10 @@ public class VistaAgregarAfiliado extends javax.swing.JInternalFrame {
         Integer dni=var;
         String apellido = jApellido.getText();
         String nombre = jNombre.getText();
-        Integer telefono = Integer.parseInt(jTelefono.getText());
+        String telefono = jTelefono.getText();
         String domicilio = jDomicilio.getText();
         Boolean estado = true;
-        if(apellido.isEmpty() || nombre.isEmpty() || domicilio.isEmpty() || telefono==0 || dni==0){
+        if(apellido.isEmpty() || nombre.isEmpty() || domicilio.isEmpty() || telefono.isEmpty() || dni==0){
             JOptionPane.showMessageDialog(this, "Complete los campos vacios. Por Favor");
             return;           
         }
@@ -278,22 +278,16 @@ public class VistaAgregarAfiliado extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatos(){
-        //try{
             if (jDni==null){
                 Integer dni = Integer.parseInt(jDni.getText());
                 String apellido = jApellido.getText();
                 
                 String nombre = jNombre.getText();
-                Integer telefono = Integer.parseInt(jTelefono.getText());
+                String telefono = jTelefono.getText();
                 String domicilio = jDomicilio.getText();
                 Boolean estado=true;
-                System.out.println(apellido);
                 agregarAfiliado=new Afiliados(nombre, apellido, dni, domicilio,telefono,estado);
-                System.out.println(agregarAfiliado+"sergio");
             }
-        //}catch(NumberFormatException nfe){
-            //JOptionPane.showMessageDialog(this, "debe Ingresar un numero de dni ");
-        //}
     }
     
     private void limpiar(){

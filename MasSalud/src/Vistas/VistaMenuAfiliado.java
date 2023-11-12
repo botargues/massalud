@@ -14,6 +14,10 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
         jAgregar.setEnabled(false);
         jModificar.setEnabled(false);
         jEliminar.setEnabled(false);
+        jApellido.setEnabled(false);
+        jNombre.setEnabled(false);
+        jDomicilio.setEnabled(false);
+        jTelefono.setEnabled(false);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -250,12 +254,7 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
                         );
                 if(confirmacion == JOptionPane.YES_OPTION){
                     afiData.eliminarAfiliado(dni);
-                    jDocumentoAfiliado.setText("");
-                    jNombre.setText("");
-                    jApellido.setText("");
-                    jTelefono.setText("");
-                    jDomicilio.setText("");
-                    jestado.setText("");    
+                    limpiarCampos();
                 }else{
                     JOptionPane.showMessageDialog(null, "se Cancelo la operacion");
                 }
@@ -266,41 +265,69 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jEliminarActionPerformed
 
     private void jBuscarAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarAfiliadoActionPerformed
+        if(jDocumentoAfiliado.getText().length()<=7){
+            JOptionPane.showMessageDialog(this, "Numero invalido");
+            return;
+        }
         try{
             int dni = Integer.parseInt(jDocumentoAfiliado.getText());
             afiliadoActual = afiData.buscarAfiliado(dni);
             if(afiliadoActual != null){
+               jNombre.setEnabled(true);
                jNombre.setText(afiliadoActual.getNombre());
+               jApellido.setEnabled(true);
                jApellido.setText(afiliadoActual.getApellido());
+               jTelefono.setEnabled(true);
                jTelefono.setText(String.valueOf(afiliadoActual.getTelefono()));
+               jDomicilio.setEnabled(true);
                jDomicilio.setText(afiliadoActual.getDomicilio());
-               jestado.setText(" ACTIVO");
-               jModificar.setEnabled(true);
-               jEliminar.setEnabled(true);
+               jDocumentoAfiliado.setEnabled(false);
+                if (afiliadoActual.isEstado()==true){
+                    jestado.setText("ACTIVO");
+                    jModificar.setEnabled(true);
+                    jEliminar.setEnabled(true);
+                }else if(afiliadoActual.isEstado()==false){
+                    jestado.setText("INACTIVO");
+                    int confirmacion = JOptionPane.showConfirmDialog(null, "AFILIADO INACTIVO ¿Desea Activarlo?",
+                        "Confirmar Eliminacion",
+                        JOptionPane.YES_NO_OPTION
+                        );
+                    if(confirmacion == JOptionPane.YES_OPTION){
+                        afiliadoActual.setEstado(true);
+                        afiData.modificarAfiliado(afiliadoActual);
+                        jestado.setText("ACTIVO");
+                        jModificar.setEnabled(true);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "Para dar de alta un afiliado complete los campos y oprima agregar ");
+                jAgregar.setEnabled(true);
+                jModificar.setEnabled(false);
+                jEliminar.setEnabled(false);
+                jApellido.setEnabled(true);
+                jNombre.setEnabled(true);
+                jDomicilio.setEnabled(true);
+                jTelefono.setEnabled(true);
             }
        }catch(NumberFormatException nf){
-           JOptionPane.showMessageDialog(this, "Debe ingresar un alido ");
+           JOptionPane.showMessageDialog(this, "Debe ingresar un numero de documento ");
        }
     }//GEN-LAST:event_jBuscarAfiliadoActionPerformed
 
     private void jAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgregarActionPerformed
-        try {
-            Integer dni = Integer.parseInt(jDocumentoAfiliado.getText());
-            String apellido = jApellido.getText();
-            String nombre = jNombre.getText();
-            Integer telefono = Integer.parseInt(jTelefono.getText());
-            String domicilio = jDomicilio.getText();
-            if(apellido.isEmpty() || nombre.isEmpty() || domicilio.isEmpty() || telefono==0){
-                JOptionPane.showMessageDialog(this, "Complete los campos vacios. Por Favor");
+        Integer dni = Integer.parseInt(jDocumentoAfiliado.getText());
+        String apellido = jApellido.getText();
+        String nombre = jNombre.getText();
+        String telefono = jTelefono.getText();
+        String domicilio = jDomicilio.getText();
+        if(apellido.isEmpty() || nombre.isEmpty() || domicilio.isEmpty() || telefono.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Complete los campos vacios. Por Favor");
             return;           
-            }
-            Boolean estado = true;
-            afiliadoActual=new Afiliados(nombre, apellido, dni, domicilio,telefono,estado);
-            afiData.guardarAfiliado(afiliadoActual);
-            limpiarCampos();
-        }catch(NumberFormatException nfe){
-            JOptionPane.showMessageDialog(this, "debe Ingresar un numero de dni ");
         }
+        Boolean estado = true;
+        afiliadoActual=new Afiliados(nombre, apellido, dni, domicilio,telefono,estado);
+        afiData.guardarAfiliado(afiliadoActual);
+        limpiarCampos();
     }//GEN-LAST:event_jAgregarActionPerformed
 
     private void jModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModificarActionPerformed
@@ -308,38 +335,24 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
             Integer dni = Integer.parseInt(jDocumentoAfiliado.getText());
             String nombre = jNombre.getText();
             String apellido = jApellido.getText();                        
-            Integer telefono = Integer.parseInt(jTelefono.getText());
+            String telefono = jTelefono.getText();
             String domicilio = jDomicilio.getText();
-            if (apellido.isEmpty() || nombre.isEmpty() || domicilio.isEmpty() || telefono==0 ){
+            if (apellido.isEmpty() || nombre.isEmpty() || domicilio.isEmpty() || telefono.isEmpty() ){
                JOptionPane.showMessageDialog(this, " No puede haber campos vacios");
               return;
             }
             Boolean estado = true;
-            
-            //if(afiliadoActual==null){
-             //   System.out.println(afiliadoActual);
-                afiliadoActual=new Afiliados();
-                afiliadoActual.setNombre(nombre);
-                afiliadoActual.setApellido(apellido);
-                afiliadoActual.setDni(dni);
-                afiliadoActual.setDomicilio(domicilio);
-                afiliadoActual.setTelefono(telefono);
-                afiliadoActual.setEstado(true);
-                afiData.modificarAfiliado(afiliadoActual);
-                limpiarCampos();
-            /*}else{  
-                afiliadoActual.getIdAfiliado();
-                afiliadoActual.setDni(dni);
-                afiliadoActual.setApellido(apellido);
-                afiliadoActual.setNombre(nombre);
-                afiliadoActual.setTelefono(telefono);
-                afiliadoActual.setDomicilio(domicilio);
-                afiliadoActual.setEstado(estado);
-                afiData.modificarAfiliado(afiliadoActual);
-                limpiarCampos();*/
-            //} 
+            Afiliados afiliadoActual=new Afiliados();
+            afiliadoActual.setNombre(nombre);
+            afiliadoActual.setApellido(apellido);
+            afiliadoActual.setDni(dni);
+            afiliadoActual.setDomicilio(domicilio);
+            afiliadoActual.setTelefono(telefono);
+            afiliadoActual.setEstado(true);
+            afiData.modificarAfiliado(afiliadoActual);
+            limpiarCampos();
         } catch(NumberFormatException nf ){
-            JOptionPane.showMessageDialog(this, "Debe ingresar un DNI correcto");
+            JOptionPane.showMessageDialog(this, "Error al acceder a la base de datos. Verifique la informacion");
         }
     }//GEN-LAST:event_jModificarActionPerformed
 
@@ -416,12 +429,20 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jestado;
     // End of variables declaration//GEN-END:variables
 
-  private void limpiarCampos(){
-    jDocumentoAfiliado.setText("");  ;
-    jApellido.setText("");
-    jNombre.setText("");
-    jTelefono.setText("");
-    jDomicilio.setText("");
-    jestado.setText("");
+    private void limpiarCampos(){
+        jDocumentoAfiliado.setText("");  ;
+        jApellido.setText("");
+        jNombre.setText("");
+        jTelefono.setText("");
+        jDomicilio.setText("");
+        jestado.setText("");
+        jDocumentoAfiliado.setEnabled(true);
+        jAgregar.setEnabled(false);
+        jModificar.setEnabled(false);
+        jEliminar.setEnabled(false);
+        jApellido.setEnabled(false);
+        jNombre.setEnabled(false);
+        jDomicilio.setEnabled(false);
+        jTelefono.setEnabled(false);
     }
 }

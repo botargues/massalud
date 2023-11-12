@@ -26,7 +26,7 @@ public class afiliadoData {
         ps.setString(2, afiliado.getApellido() );
         ps.setInt(3, afiliado.getDni());
         ps.setString(4, afiliado.getDomicilio());
-        ps.setLong(5, afiliado.getTelefono());
+        ps.setString(5, afiliado.getTelefono());
         ps.setBoolean(6, afiliado.isEstado());
         ps.executeUpdate();
         ResultSet rs=ps.getGeneratedKeys();   
@@ -43,17 +43,16 @@ public class afiliadoData {
     public void modificarAfiliado(Afiliados afiliado){
         String sql="UPDATE afiliados SET nombre=?,apellido=?,dni=?,domicilio=?,telefono=?,estado=? WHERE dni=?";
         try{ 
-            System.out.println(afiliado.getDni());
-            PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps= con.prepareStatement(sql);
             ps.setString(1, afiliado.getNombre());
             ps.setString(2, afiliado.getApellido());        
             ps.setInt(3, afiliado.getDni()); 
             ps.setString(4, afiliado.getDomicilio());
-            ps.setLong(5, afiliado.getTelefono());
+            ps.setString(5, afiliado.getTelefono());
             ps.setBoolean(6, afiliado.isEstado());
-            ps.setInt(7, afiliado.getIdAfiliado());
+            ps.setInt(7, afiliado.getDni());
             int exito=ps.executeUpdate();
-            if(exito==1){
+            if(exito!=0){
                 JOptionPane.showMessageDialog(null, "Afiliado Modificado");
             }
         }catch(SQLException ex){
@@ -76,7 +75,7 @@ public class afiliadoData {
      }
      
     public Afiliados buscarAfiliado(int dni){
-        String sql="SELECT idAfiliados, nombre, apellido, dni, domicilio, telefono FROM afiliados WHERE dni=? AND estado=1";
+        String sql="SELECT idAfiliados,nombre,apellido,dni,domicilio,telefono,estado FROM afiliados WHERE dni=?";
         Afiliados afiliado=null;
         try {    
             PreparedStatement ps=con.prepareStatement(sql);  
@@ -89,8 +88,8 @@ public class afiliadoData {
                 afiliado.setApellido(rs.getString("apellido"));
                 afiliado.setDni(dni);   
                 afiliado.setDomicilio(rs.getString("domicilio"));
-                afiliado.setTelefono(rs.getLong("telefono"));
-                afiliado.setEstado(true);
+                afiliado.setTelefono(rs.getString("telefono"));
+                afiliado.setEstado(rs.getBoolean("estado"));
             }else{
                 JOptionPane.showMessageDialog(null, "Ningun afiliado con ese dni");   
             }
@@ -113,7 +112,7 @@ public class afiliadoData {
                 afi.setApellido(rs.getString("apellido"));
                 afi.setDni(rs.getInt("dni"));
                 afi.setDomicilio(rs.getString("domicilio"));
-                afi.setTelefono(rs.getLong("telefono"));
+                afi.setTelefono(rs.getString("telefono"));
                 afi.setEstado(rs.getBoolean("estado"));
                 afiliados.add(afi);
             }
@@ -137,7 +136,7 @@ public class afiliadoData {
                 afi.setApellido(rs.getString("apellido"));
                 afi.setDni(rs.getInt("dni"));
                 afi.setDomicilio(rs.getString("domicilio"));
-                afi.setTelefono(rs.getLong("telefono"));
+                afi.setTelefono(rs.getString("telefono"));
                 afi.setEstado(rs.getBoolean("estado"));
                 afiliados.add(afi);
             }
@@ -162,7 +161,7 @@ public class afiliadoData {
                     afiliado.setApellido(rs.getString("apellido"));
                     afiliado.setDni(rs.getInt("dni"));   
                     afiliado.setDomicilio(rs.getString("domicilio"));
-                    afiliado.setTelefono(rs.getLong("telefono"));
+                    afiliado.setTelefono(rs.getString("telefono"));
                     afiliado.setEstado(true);
                 }else{
                     JOptionPane.showMessageDialog(null, "No ningun afiliado con ese dni");   
@@ -173,5 +172,4 @@ public class afiliadoData {
         }
         return afiliado;         
         }
-     
 }

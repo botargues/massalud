@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package massalud.Entidades;
 
 import java.util.Objects;
 
-/**
- *
- * @author juanBenavides
- */
 public class Especialidad {
     private int idEspecialidad;
     private String NomEspecialidad;
@@ -40,7 +32,7 @@ public class Especialidad {
 
     @Override
     public String toString() {
-        return  "id: "+idEspecialidad+"-"+NomEspecialidad;
+        return idEspecialidad+" - "+NomEspecialidad;
     }
 
     @Override
