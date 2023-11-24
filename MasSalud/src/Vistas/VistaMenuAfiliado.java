@@ -373,7 +373,9 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
         boolean mayusculas = key >= 65 && key <= 90;
         boolean minusculas = key >= 97 && key <= 122;
         boolean espacio = key == 32;
-        if (!(minusculas || mayusculas || espacio)){
+        boolean Ñ = key =='\u00d1';
+        boolean ñ = key =='\u00f1';
+        if (!(minusculas || mayusculas || espacio || Ñ || ñ)){
             evt.consume();
         }
     }//GEN-LAST:event_jApellidoKeyTyped
@@ -383,7 +385,9 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
         boolean mayusculas = key >= 65 && key <= 90;
         boolean minusculas = key >= 97 && key <= 122;
         boolean espacio = key == 32;
-        if (!(minusculas || mayusculas || espacio)){
+        boolean Ñ = key =='\u00d1';
+        boolean ñ = key =='\u00f1';
+        if (!(minusculas || mayusculas || espacio || Ñ || ñ)){
             evt.consume();
         }
     }//GEN-LAST:event_jNombreKeyTyped
@@ -394,7 +398,9 @@ public class VistaMenuAfiliado extends javax.swing.JInternalFrame {
         boolean minusculas = key >= 97 && key <= 122;
         boolean espacio = key == 32;
         boolean numeros = key >= 48 && key <= 57;
-        if (!(minusculas || mayusculas || espacio || numeros)){
+        boolean Ñ = key =='\u00d1';
+        boolean ñ = key =='\u00f1';
+        if (!(minusculas || mayusculas || espacio || numeros || Ñ || ñ)){
             evt.consume();
         }
     }//GEN-LAST:event_jDomicilioKeyTyped

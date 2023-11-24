@@ -67,7 +67,7 @@ public class afiliadoData {
             ps.setInt(1, dni);
             int exito=ps.executeUpdate();
             if(exito==1){
-              JOptionPane.showMessageDialog(null, "El Afiliado ha sido eliminado");
+              JOptionPane.showMessageDialog(null, "Prestador Inactivo");
             }
         }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Afiliado"); 
@@ -100,8 +100,8 @@ public class afiliadoData {
         return afiliado;         
     }
      
-    public List<Afiliados> listarAfiliadosNoActivos(){
-        String sql="SELECT idAfiliados,nombre, apellido, dni,domicilio,telefono FROM afiliados WHERE estado=0"; 
+    public List<Afiliados> listarAfiliados(){
+        String sql="SELECT idAfiliados,nombre, apellido, dni,domicilio,telefono FROM afiliados "; 
         ArrayList<Afiliados> afiliados=new ArrayList<>();
         try{     
             PreparedStatement ps=con.prepareStatement(sql);  //generamos el preparedstament con la conexion  y pasamos la sentencia sql
@@ -164,7 +164,7 @@ public class afiliadoData {
                     afiliado.setTelefono(rs.getString("telefono"));
                     afiliado.setEstado(true);
                 }else{
-                    JOptionPane.showMessageDialog(null, "No ningun afiliado con ese dni");   
+                    JOptionPane.showMessageDialog(null, "No hay afiliado con ese codigo ");   
                 }
                 ps.close();
         }catch (SQLException ex) {
@@ -172,4 +172,30 @@ public class afiliadoData {
         }
         return afiliado;         
         }
-}
+    
+    public Afiliados buscarAfiliadoPorApellido(String apel){
+        String sql="SELECT idAfiliados, nombre, apellido, dni, domicilio, telefono FROM afiliados WHERE apellido=? AND estado=1";
+        Afiliados afiliado=null;
+        try {    
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setString(1, apel);
+            ResultSet rs=ps.executeQuery();
+                if(rs.next()){      
+                    afiliado=new Afiliados();          
+                    afiliado.setIdAfiliado(rs.getInt("idAfiliados")); 
+                    afiliado.setNombre(rs.getString("nombre"));
+                    afiliado.setApellido(rs.getString("apellido"));
+                    afiliado.setDni(rs.getInt("dni"));   
+                    afiliado.setDomicilio(rs.getString("domicilio"));
+                    afiliado.setTelefono(rs.getString("telefono"));
+                    afiliado.setEstado(true);
+                }else{
+                    JOptionPane.showMessageDialog(null, "No hay afiliado con ese Apellido");   
+                }
+                ps.close();
+            }catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Afiliados");
+            }
+            return afiliado;         
+        }
+    }

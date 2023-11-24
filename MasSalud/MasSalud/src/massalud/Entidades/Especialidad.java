@@ -1,7 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package massalud.Entidades;
 
-import java.util.Objects;
-
+/**
+ *
+ * @author juanBenavides
+ */
 public class Especialidad {
     private int idEspecialidad;
     private String NomEspecialidad;
@@ -11,7 +17,8 @@ public class Especialidad {
         this.NomEspecialidad = NomEspecialidad;
     }
 
-    public Especialidad() {}
+    public Especialidad() {
+    }
 
     public int getIdEspecialidad() {
         return idEspecialidad;
@@ -31,14 +38,8 @@ public class Especialidad {
 
     @Override
     public String toString() {
-        return idEspecialidad+" - "+NomEspecialidad;
+        return "Especialidad{"+" NomEspecialidad=" + NomEspecialidad + '}';
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return false;
-        Especialidad otro = (Especialidad) obj;
-        return Objects.equals(this.idEspecialidad, otro.idEspecialidad) && Objects.equals(this.NomEspecialidad, otro.NomEspecialidad);
-    }
+    
+    
 }

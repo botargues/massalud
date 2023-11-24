@@ -1,16 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package massalud.Entidades;
 
 import java.time.LocalDate;
 
+/**
+ *
+ * @author JuanBenavides
+ */
 public class Orden {
     private int idOrden;
     private LocalDate fecha;
-    private Byte formaDepago;
+    private int formaDepago;
     private double importe;
     private Afiliados idAfiliado;
     private Prestador idPrestador;
 
-    public Orden(int idOrden, LocalDate fecha, Byte formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
+    public Orden(int idOrden, LocalDate fecha, int formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
         this.idOrden = idOrden;
         this.fecha = fecha;
         this.formaDepago = formaDepago;
@@ -19,7 +27,7 @@ public class Orden {
         this.idPrestador = idPrestador;
     }
 
-    public Orden(LocalDate fecha, Byte formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
+    public Orden(LocalDate fecha, int formaDepago, double importe, Afiliados idAfiliado, Prestador idPrestador) {
         this.fecha = fecha;
         this.formaDepago = formaDepago;
         this.importe = importe;
@@ -27,7 +35,8 @@ public class Orden {
         this.idPrestador = idPrestador;
     }
 
-    public Orden() {}
+    public Orden() {
+    }
 
     public int getIdOrden() {
         return idOrden;
@@ -45,11 +54,11 @@ public class Orden {
         this.fecha = fecha;
     }
 
-    public Byte getFormaDepago() {
+    public int getFormaDepago() {
         return formaDepago;
     }
 
-    public void setFormaDepago(Byte formaDepago) {
+    public void setFormaDepago(int formaDepago) {
         this.formaDepago = formaDepago;
     }
 
@@ -64,8 +73,7 @@ public class Orden {
     public Afiliados getIdAfiliado() {
         return idAfiliado;
     }
-    
-  
+
     public void setIdAfiliado(Afiliados idAfiliado) {
         this.idAfiliado = idAfiliado;
     }
@@ -80,6 +88,8 @@ public class Orden {
 
     @Override
     public String toString() {
-        return "{" + "" + fecha + '}';
+        return "Orden{" + "fecha=" + fecha + ", formaDepago=" + formaDepago + ", importe=" + importe + ", idAfiliado=" + idAfiliado + ", idPrestador=" + idPrestador + '}';
     }
+    
+    
 }

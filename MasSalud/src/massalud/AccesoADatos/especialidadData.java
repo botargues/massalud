@@ -36,7 +36,6 @@ public class especialidadData {
         return nombrarEspecialidad;
     }
     
-    
     public Especialidad obtenerIdEspecialida(int idEspecialidad){
         String sql = "SELECT idEspecialidad, Especialidad FROM especialidad WHERE idEspecialidad = ? ";
         Especialidad idEsp = null;
@@ -71,7 +70,7 @@ public class especialidadData {
                 pre.setApellido(rs.getString("apellido"));
                 pre.setNombre(rs.getString("nombre"));
                 pre.setDomicilio(rs.getString("domicilio"));
-                pre.setTelefono(rs.getLong("telefono"));
+                pre.setTelefono(rs.getString("telefono"));
                 pre.setEstado(rs.getBoolean("estado"));
                 prestadEspecialidad.add(pre);
             }

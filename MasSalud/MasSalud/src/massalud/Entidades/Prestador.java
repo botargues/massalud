@@ -1,5 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package massalud.Entidades;
 
+/**
+ *
+ * @author JuanBenavides
+ */
 public class Prestador {
     
     private int idPrestador;
@@ -7,11 +15,11 @@ public class Prestador {
     private String apellido;
     private int dni;
     private String domicilio;
-    private String telefono;
+    private int telefono;
     private boolean estado;
     private Especialidad especialidad;
 
-    public Prestador(int idPrestador, String nombre, String apellido, int dni, String domicilio, String telefono, boolean estado, Especialidad especialidad) {
+    public Prestador(int idPrestador, String nombre, String apellido, int dni, String domicilio, int telefono, boolean estado, Especialidad especialidad) {
         this.idPrestador = idPrestador;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -22,7 +30,7 @@ public class Prestador {
         this.especialidad = especialidad;
     }
 
-    public Prestador(String nombre, String apellido, int dni, String domicilio, String telefono, boolean estado, Especialidad especialidad) {
+    public Prestador(String nombre, String apellido, int dni, String domicilio, int telefono, boolean estado, Especialidad especialidad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -32,8 +40,10 @@ public class Prestador {
         this.especialidad = especialidad;
     }
 
-    public Prestador() {}
+    public Prestador() {
+    }
     
+
     public int getIdPrestador() {
         return idPrestador;
     }
@@ -74,11 +84,11 @@ public class Prestador {
         this.domicilio = domicilio;
     }
 
-    public String getTelefono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 
@@ -95,11 +105,13 @@ public class Prestador {
     }
 
     public void setEspecialidad(Especialidad especialidad) {
-       this.especialidad = especialidad;
+        this.especialidad = especialidad;
     }
 
     @Override
     public String toString() {
-        return nombre+" "+apellido;
+        return  "nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", domicilio=" + domicilio + ", telefono=" + telefono + ", estado=" + estado + ", especialidad=" + especialidad;
     }
+    
+    
 }

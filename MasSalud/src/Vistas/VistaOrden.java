@@ -7,14 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-//import java.text.SimpleDateFormat;
-//import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-//import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Locale;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import massalud.AccesoADatos.Conexion;
@@ -338,7 +334,6 @@ public class VistaOrden extends javax.swing.JInternalFrame {
         try{
             dni = Integer.parseInt(jDocumentoAfiliado.getText());
             Afiliados afil = afiData.buscarAfiliado(dni);
-                //
                 if(afil == null){
                     int confirmacion = JOptionPane.showConfirmDialog( null, "¿Quiere ingresar un nuevo afiliado?",
                             " ",JOptionPane.YES_NO_OPTION);

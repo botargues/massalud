@@ -26,7 +26,7 @@ public class prestadorData {
             ps.setString(2, prestador.getApellido());
             ps.setInt(3, prestador.getDni());
             ps.setString(4, prestador.getDomicilio());
-            ps.setLong(5, prestador.getTelefono());
+            ps.setString(5, prestador.getTelefono());
             ps.setBoolean(6, prestador.isEstado());
             ps.setInt(7, prestador.getEspecialidad().getIdEspecialidad());      
             ps.executeUpdate();
@@ -35,7 +35,6 @@ public class prestadorData {
                 prestador.setIdPrestador(rs.getInt(1));   
                 JOptionPane.showMessageDialog(null,"Se ha agregado un Prestador");
             }
-              
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Prestador"+ex.getLocalizedMessage());
         }
@@ -57,36 +56,26 @@ public class prestadorData {
         return  false;
     }
     
-    public Prestador buscarPrestadorDniActivos(int dni){
+    public Prestador buscarPrestadorDni(int dni){
         Prestador prestado=null;
-        
-        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=1";
-        
+        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=?";
         PreparedStatement ss=null;
         especialidadData esp = new especialidadData();
-        
         try {
             ss=con.prepareStatement(sql);
             ss.setInt(1,dni);
             ResultSet rs=ss.executeQuery();
-            System.out.println(rs);
             if (rs.next()){
-                
                 prestado=new Prestador();
                 prestado.setNombre(rs.getString("nombre"));
                 prestado.setApellido(rs.getString("apellido"));
                 prestado.setDni(rs.getInt("dni"));
                 prestado.setDomicilio(rs.getString("domicilio"));
-                prestado.setTelefono(rs.getLong("telefono"));
+                prestado.setTelefono(rs.getString("telefono"));
                 prestado.setEstado(rs.getBoolean("estado"));
-//                System.out.println(prestado);
-                
                 int IdEspecialidad = rs.getInt("idEspecialidad");
                 Especialidad especialidad = esp.obtenerIdEspecialida(IdEspecialidad);
-                
                 prestado.setEspecialidad(especialidad);
-                //System.out.println(especialidad);
-                //System.out.println(prestado);
             }else{
                 JOptionPane.showMessageDialog(null,"prestador no registrado");
                 ss.close();
@@ -97,36 +86,26 @@ public class prestadorData {
         return prestado;
     }
     
-    public Prestador buscarPrestadorDniNoActivos(int dni){
+    public Prestador buscarPrestadorPorApellido(String apel){
      Prestador prestado=null;
-        
-        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE dni=? AND estado=0";
-        
+        String sql="SELECT nombre, apellido, dni, domicilio, telefono, estado, idEspecialidad FROM prestador WHERE apellido=?";
         PreparedStatement ss=null;
         especialidadData esp = new especialidadData();
-        
         try {
             ss=con.prepareStatement(sql);
-            ss.setInt(1,dni);
+            ss.setString(1,apel);
             ResultSet rs=ss.executeQuery();
-            System.out.println(rs);
             if (rs.next()){
-                
                 prestado=new Prestador();
                 prestado.setNombre(rs.getString("nombre"));
                 prestado.setApellido(rs.getString("apellido"));
                 prestado.setDni(rs.getInt("dni"));
                 prestado.setDomicilio(rs.getString("domicilio"));
-                prestado.setTelefono(rs.getLong("telefono"));
+                prestado.setTelefono(rs.getString("telefono"));
                 prestado.setEstado(rs.getBoolean("estado"));
-//                System.out.println(prestado);
-                
                 int IdEspecialidad = rs.getInt("idEspecialidad");
                 Especialidad especialidad = esp.obtenerIdEspecialida(IdEspecialidad);
-                
                 prestado.setEspecialidad(especialidad);
-                //System.out.println(especialidad);
-                //System.out.println(prestado);
             }else{
                 JOptionPane.showMessageDialog(null,"prestador no registrado");
                 ss.close();
@@ -135,10 +114,6 @@ public class prestadorData {
             JOptionPane.showMessageDialog(null,"Error alacceder a la tabla prestador "+xx.getLocalizedMessage());
         }
         return prestado;
-    
-    
-    
-    
     }
      
     public void modificarPrestador(Prestador prestador){
@@ -149,7 +124,7 @@ public class prestadorData {
             ps.setString(2, prestador.getApellido());
             ps.setInt(3, prestador.getDni());
             ps.setString(4, prestador.getDomicilio());
-            ps.setLong(5, prestador.getTelefono());
+            ps.setString(5, prestador.getTelefono());
             ps.setBoolean(6, prestador.isEstado());
             ps.setInt(7, prestador.getEspecialidad().getIdEspecialidad());
             ps.setInt(8, prestador.getDni());
@@ -163,56 +138,42 @@ public class prestadorData {
     }
     
     public void eliminarPrestadro(int dni){
-        
         String sql = "UPDATE prestador SET estado = 0 WHERE dni = ?";
-        
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
             int exito =ps.executeUpdate();
-            
             if (exito ==1) {
-                JOptionPane.showMessageDialog(null, "Prestador Borrado");
+                JOptionPane.showMessageDialog(null, "Prestador Inactivo");
             }
-            
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "Error al acceder a la tabla al Prestador"+ ex);
         }
-    
     }
     
     public ArrayList<Prestador> listarPrestador(){
-        
-            
-           String sql="SELECT idPrestador,nombre, apellido,dni,domicilio,telefono FROM prestador WHERE estado=1"; 
-           ArrayList<Prestador> prestadores=new ArrayList<>();
-         try {    
+        String sql="SELECT idPrestador,nombre, apellido,dni,domicilio,telefono FROM prestador WHERE estado=1"; 
+        ArrayList<Prestador> prestadores=new ArrayList<>();
+        try {    
             PreparedStatement ps=con.prepareStatement(sql);  
             ResultSet rs=ps.executeQuery();
             while(rs.next()){       
-            
-              Prestador pres=new Prestador(); 
-              pres.setIdPrestador(rs.getInt("idPrestador")); 
-              pres.setNombre(rs.getString("nombre"));
-              pres.setApellido(rs.getString("apellido"));
-              pres.setDni(rs.getInt("dni"));
-              pres.setDomicilio(rs.getString("domicilio"));
-              pres.setTelefono(rs.getLong("telefono"));
-              pres.setEstado(true);
-              
-               prestadores.add( pres);
-            
-              
+                Prestador pres=new Prestador(); 
+                pres.setIdPrestador(rs.getInt("idPrestador")); 
+                pres.setNombre(rs.getString("nombre"));
+                pres.setApellido(rs.getString("apellido"));
+                pres.setDni(rs.getInt("dni"));
+                pres.setDomicilio(rs.getString("domicilio"));
+                pres.setTelefono(rs.getString("telefono"));
+                pres.setEstado(true);
+                prestadores.add( pres);
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Prestador");
         }
-        
         return prestadores;         
-        
-        
-        }
+    }
     
     public Prestador buscarPrestadorPorId(int idPrestador){
         Prestador prestado=null;
@@ -229,7 +190,7 @@ public class prestadorData {
                 prestado.setApellido(rs.getString("apellido"));
                 prestado.setDni(rs.getInt("dni"));
                 prestado.setDomicilio(rs.getString("domicilio"));
-                prestado.setTelefono(rs.getLong("telefono"));
+                prestado.setTelefono(rs.getString("telefono"));
                 prestado.setEstado(rs.getBoolean("estado"));
                 prestado.setIdPrestador(idPrestador);
                 int IdEspecialidad = rs.getInt("idEspecialidad");
